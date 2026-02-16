@@ -1,0 +1,143 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+
+model users {
+  id_user     Int       @id @default(autoincrement())
+  name        String
+  email       String    @unique
+  password    String
+  address     String?
+  image       String?   @default("https://image.com")
+  role        String    @default("user")
+  createdAt   DateTime  @default(now())
+
+  memberships        memberships[]
+  absensi            absensi[]
+  likes              likes[]
+  favourites         favourites[]
+  comments           comments[]
+  qr_sessions        qr_sessions[]
+  notification_logs  notification_logs[]
+}
+
+model memberships {
+  id_membership Int       @id @default(autoincrement())
+  id_user       Int
+  name          String
+  description   String?
+  no_member     String?
+  expired_at    DateTime
+  createdAt     DateTime @default(now())
+
+  users users @relation(fields: [id_user], references: [id_user], onDelete: Cascade)
+}
+
+model absensi {
+  id_absensi  Int      @id @default(autoincrement())
+  id_user     Int
+  date        DateTime
+  status      String
+  createdAt   DateTime @default(now())
+
+  users users @relation(fields: [id_user], references: [id_user], onDelete: Cascade)
+}
+
+model qr_sessions {
+  id_qrcode   Int      @id @default(autoincrement())
+  id_user     Int
+  token       String   @unique
+  expired_at  DateTime
+  is_used     Boolean  @default(false)
+  createdAt   DateTime @default(now())
+
+  users users @relation(fields: [id_user], references: [id_user], onDelete: Cascade)
+}
+
+model categories {
+  id_category  Int      @id @default(autoincrement())
+  name         String
+  description  String?
+  createdAt    DateTime @default(now())
+  products     products[]
+}
+
+model products {
+  id_product   Int       @id @default(autoincrement())
+  id_category  Int
+  name         String
+  description  String?
+  image        String?
+  price        Float
+  stock        Int       @default(0)
+  createdAt    DateTime  @default(now())
+
+  categories categories @relation(fields: [id_category], references: [id_category], onDelete: Cascade)
+  likes      likes[]
+  favourites favourites[]
+  comments   comments[]
+}
+
+model likes {
+  id_like     Int      @id @default(autoincrement())
+  id_user     Int
+  id_product  Int
+  status      Boolean  @default(false)
+  createdAt   DateTime @default(now())
+
+  users    users    @relation(fields: [id_user], references: [id_user], onDelete: Cascade)
+  products products @relation(fields: [id_product], references: [id_product], onDelete: Cascade)
+}
+
+model favourites {
+  id_favourite Int      @id @default(autoincrement())
+  id_user      Int
+  id_product   Int
+  status       Boolean  @default(false)
+  createdAt    DateTime @default(now())
+
+  users    users    @relation(fields: [id_user], references: [id_user], onDelete: Cascade)
+  products products @relation(fields: [id_product], references: [id_product], onDelete: Cascade)
+}
+
+model comments {
+  id_comment    Int      @id @default(autoincrement())
+  id_user       Int
+  id_product    Int
+  comment_text  String
+  createdAt     DateTime @default(now())
+
+  users    users    @relation(fields: [id_user], references: [id_user], onDelete: Cascade)
+  products products @relation(fields: [id_product], references: [id_product], onDelete: Cascade)
+}
+
+model notification_templates {
+  id_template  Int      @id @default(autoincrement())
+  message      String
+  is_active    Boolean  @default(true)
+  createdAt    DateTime @default(now())
+
+  notification_logs notification_logs[]
+}
+
+model notification_logs {
+  id_log      Int      @id @default(autoincrement())
+  id_user     Int
+  id_template Int
+  sent_at     DateTime @default(now())
+
+  users users @relation(fields: [id_user], references: [id_user], onDelete: Cascade)
+  templates notification_templates @relation(fields: [id_template], references: [id_template], onDelete: Cascade)
+}
