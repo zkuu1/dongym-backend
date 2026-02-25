@@ -22,6 +22,7 @@ model users {
   address     String?
   image       String?   @default("https://image.com")
   role        String    @default("user")
+  token       String?
   createdAt   DateTime  @default(now())
 
   memberships        memberships[]
