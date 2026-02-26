@@ -1,6 +1,6 @@
 import z from "zod"
 
-export class userValidation {
+export class UserValidation {
     static readonly CREATE = z.object({
         name: z.preprocess(
         (v) => (v == null ? '' : v),

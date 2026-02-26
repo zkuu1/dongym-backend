@@ -1,8 +1,8 @@
-import type {memberships, users} from "../generated/prisma/client.js"
+import type {memberships, users} from "../../generated/prisma/client.js"
 import {
     type PaginationMeta,
     buildPaginationMeta
-} from "../dto/pagination.dto.js"
+} from "../../dto/pagination.dto.js"
 
 
 // ======== request =========== 
@@ -37,7 +37,7 @@ export type UsersData = {
     image?: string | null
     role: string
     token?: string | null
-    memberships: MembershipsData[]
+    memberships?: MembershipsData[]
     createdAt?: Date
 }
 

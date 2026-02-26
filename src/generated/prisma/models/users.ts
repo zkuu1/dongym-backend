@@ -42,6 +42,7 @@ export type UsersMinAggregateOutputType = {
   address: string | null
   image: string | null
   role: string | null
+  token: string | null
   createdAt: Date | null
 }
 
@@ -53,6 +54,7 @@ export type UsersMaxAggregateOutputType = {
   address: string | null
   image: string | null
   role: string | null
+  token: string | null
   createdAt: Date | null
 }
 
@@ -64,6 +66,7 @@ export type UsersCountAggregateOutputType = {
   address: number
   image: number
   role: number
+  token: number
   createdAt: number
   _all: number
 }
@@ -85,6 +88,7 @@ export type UsersMinAggregateInputType = {
   address?: true
   image?: true
   role?: true
+  token?: true
   createdAt?: true
 }
 
@@ -96,6 +100,7 @@ export type UsersMaxAggregateInputType = {
   address?: true
   image?: true
   role?: true
+  token?: true
   createdAt?: true
 }
 
@@ -107,6 +112,7 @@ export type UsersCountAggregateInputType = {
   address?: true
   image?: true
   role?: true
+  token?: true
   createdAt?: true
   _all?: true
 }
@@ -205,6 +211,7 @@ export type UsersGroupByOutputType = {
   address: string | null
   image: string | null
   role: string
+  token: string | null
   createdAt: Date
   _count: UsersCountAggregateOutputType | null
   _avg: UsersAvgAggregateOutputType | null
@@ -239,6 +246,7 @@ export type usersWhereInput = {
   address?: Prisma.StringNullableFilter<"users"> | string | null
   image?: Prisma.StringNullableFilter<"users"> | string | null
   role?: Prisma.StringFilter<"users"> | string
+  token?: Prisma.StringNullableFilter<"users"> | string | null
   createdAt?: Prisma.DateTimeFilter<"users"> | Date | string
   memberships?: Prisma.MembershipsListRelationFilter
   absensi?: Prisma.AbsensiListRelationFilter
@@ -257,6 +265,7 @@ export type usersOrderByWithRelationInput = {
   address?: Prisma.SortOrderInput | Prisma.SortOrder
   image?: Prisma.SortOrderInput | Prisma.SortOrder
   role?: Prisma.SortOrder
+  token?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   memberships?: Prisma.membershipsOrderByRelationAggregateInput
   absensi?: Prisma.absensiOrderByRelationAggregateInput
@@ -278,6 +287,7 @@ export type usersWhereUniqueInput = Prisma.AtLeast<{
   address?: Prisma.StringNullableFilter<"users"> | string | null
   image?: Prisma.StringNullableFilter<"users"> | string | null
   role?: Prisma.StringFilter<"users"> | string
+  token?: Prisma.StringNullableFilter<"users"> | string | null
   createdAt?: Prisma.DateTimeFilter<"users"> | Date | string
   memberships?: Prisma.MembershipsListRelationFilter
   absensi?: Prisma.AbsensiListRelationFilter
@@ -296,6 +306,7 @@ export type usersOrderByWithAggregationInput = {
   address?: Prisma.SortOrderInput | Prisma.SortOrder
   image?: Prisma.SortOrderInput | Prisma.SortOrder
   role?: Prisma.SortOrder
+  token?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   _count?: Prisma.usersCountOrderByAggregateInput
   _avg?: Prisma.usersAvgOrderByAggregateInput
@@ -315,6 +326,7 @@ export type usersScalarWhereWithAggregatesInput = {
   address?: Prisma.StringNullableWithAggregatesFilter<"users"> | string | null
   image?: Prisma.StringNullableWithAggregatesFilter<"users"> | string | null
   role?: Prisma.StringWithAggregatesFilter<"users"> | string
+  token?: Prisma.StringNullableWithAggregatesFilter<"users"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"users"> | Date | string
 }
 
@@ -325,6 +337,7 @@ export type usersCreateInput = {
   address?: string | null
   image?: string | null
   role?: string
+  token?: string | null
   createdAt?: Date | string
   memberships?: Prisma.membershipsCreateNestedManyWithoutUsersInput
   absensi?: Prisma.absensiCreateNestedManyWithoutUsersInput
@@ -343,6 +356,7 @@ export type usersUncheckedCreateInput = {
   address?: string | null
   image?: string | null
   role?: string
+  token?: string | null
   createdAt?: Date | string
   memberships?: Prisma.membershipsUncheckedCreateNestedManyWithoutUsersInput
   absensi?: Prisma.absensiUncheckedCreateNestedManyWithoutUsersInput
@@ -360,6 +374,7 @@ export type usersUpdateInput = {
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.StringFieldUpdateOperationsInput | string
+  token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   memberships?: Prisma.membershipsUpdateManyWithoutUsersNestedInput
   absensi?: Prisma.absensiUpdateManyWithoutUsersNestedInput
@@ -378,6 +393,7 @@ export type usersUncheckedUpdateInput = {
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.StringFieldUpdateOperationsInput | string
+  token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   memberships?: Prisma.membershipsUncheckedUpdateManyWithoutUsersNestedInput
   absensi?: Prisma.absensiUncheckedUpdateManyWithoutUsersNestedInput
@@ -396,6 +412,7 @@ export type usersCreateManyInput = {
   address?: string | null
   image?: string | null
   role?: string
+  token?: string | null
   createdAt?: Date | string
 }
 
@@ -406,6 +423,7 @@ export type usersUpdateManyMutationInput = {
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.StringFieldUpdateOperationsInput | string
+  token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -417,6 +435,7 @@ export type usersUncheckedUpdateManyInput = {
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.StringFieldUpdateOperationsInput | string
+  token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -428,6 +447,7 @@ export type usersCountOrderByAggregateInput = {
   address?: Prisma.SortOrder
   image?: Prisma.SortOrder
   role?: Prisma.SortOrder
+  token?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -443,6 +463,7 @@ export type usersMaxOrderByAggregateInput = {
   address?: Prisma.SortOrder
   image?: Prisma.SortOrder
   role?: Prisma.SortOrder
+  token?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -454,6 +475,7 @@ export type usersMinOrderByAggregateInput = {
   address?: Prisma.SortOrder
   image?: Prisma.SortOrder
   role?: Prisma.SortOrder
+  token?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -591,6 +613,7 @@ export type usersCreateWithoutMembershipsInput = {
   address?: string | null
   image?: string | null
   role?: string
+  token?: string | null
   createdAt?: Date | string
   absensi?: Prisma.absensiCreateNestedManyWithoutUsersInput
   likes?: Prisma.likesCreateNestedManyWithoutUsersInput
@@ -608,6 +631,7 @@ export type usersUncheckedCreateWithoutMembershipsInput = {
   address?: string | null
   image?: string | null
   role?: string
+  token?: string | null
   createdAt?: Date | string
   absensi?: Prisma.absensiUncheckedCreateNestedManyWithoutUsersInput
   likes?: Prisma.likesUncheckedCreateNestedManyWithoutUsersInput
@@ -640,6 +664,7 @@ export type usersUpdateWithoutMembershipsInput = {
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.StringFieldUpdateOperationsInput | string
+  token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   absensi?: Prisma.absensiUpdateManyWithoutUsersNestedInput
   likes?: Prisma.likesUpdateManyWithoutUsersNestedInput
@@ -657,6 +682,7 @@ export type usersUncheckedUpdateWithoutMembershipsInput = {
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.StringFieldUpdateOperationsInput | string
+  token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   absensi?: Prisma.absensiUncheckedUpdateManyWithoutUsersNestedInput
   likes?: Prisma.likesUncheckedUpdateManyWithoutUsersNestedInput
@@ -673,6 +699,7 @@ export type usersCreateWithoutAbsensiInput = {
   address?: string | null
   image?: string | null
   role?: string
+  token?: string | null
   createdAt?: Date | string
   memberships?: Prisma.membershipsCreateNestedManyWithoutUsersInput
   likes?: Prisma.likesCreateNestedManyWithoutUsersInput
@@ -690,6 +717,7 @@ export type usersUncheckedCreateWithoutAbsensiInput = {
   address?: string | null
   image?: string | null
   role?: string
+  token?: string | null
   createdAt?: Date | string
   memberships?: Prisma.membershipsUncheckedCreateNestedManyWithoutUsersInput
   likes?: Prisma.likesUncheckedCreateNestedManyWithoutUsersInput
@@ -722,6 +750,7 @@ export type usersUpdateWithoutAbsensiInput = {
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.StringFieldUpdateOperationsInput | string
+  token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   memberships?: Prisma.membershipsUpdateManyWithoutUsersNestedInput
   likes?: Prisma.likesUpdateManyWithoutUsersNestedInput
@@ -739,6 +768,7 @@ export type usersUncheckedUpdateWithoutAbsensiInput = {
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.StringFieldUpdateOperationsInput | string
+  token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   memberships?: Prisma.membershipsUncheckedUpdateManyWithoutUsersNestedInput
   likes?: Prisma.likesUncheckedUpdateManyWithoutUsersNestedInput
@@ -755,6 +785,7 @@ export type usersCreateWithoutQr_sessionsInput = {
   address?: string | null
   image?: string | null
   role?: string
+  token?: string | null
   createdAt?: Date | string
   memberships?: Prisma.membershipsCreateNestedManyWithoutUsersInput
   absensi?: Prisma.absensiCreateNestedManyWithoutUsersInput
@@ -772,6 +803,7 @@ export type usersUncheckedCreateWithoutQr_sessionsInput = {
   address?: string | null
   image?: string | null
   role?: string
+  token?: string | null
   createdAt?: Date | string
   memberships?: Prisma.membershipsUncheckedCreateNestedManyWithoutUsersInput
   absensi?: Prisma.absensiUncheckedCreateNestedManyWithoutUsersInput
@@ -804,6 +836,7 @@ export type usersUpdateWithoutQr_sessionsInput = {
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.StringFieldUpdateOperationsInput | string
+  token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   memberships?: Prisma.membershipsUpdateManyWithoutUsersNestedInput
   absensi?: Prisma.absensiUpdateManyWithoutUsersNestedInput
@@ -821,6 +854,7 @@ export type usersUncheckedUpdateWithoutQr_sessionsInput = {
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.StringFieldUpdateOperationsInput | string
+  token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   memberships?: Prisma.membershipsUncheckedUpdateManyWithoutUsersNestedInput
   absensi?: Prisma.absensiUncheckedUpdateManyWithoutUsersNestedInput
@@ -837,6 +871,7 @@ export type usersCreateWithoutLikesInput = {
   address?: string | null
   image?: string | null
   role?: string
+  token?: string | null
   createdAt?: Date | string
   memberships?: Prisma.membershipsCreateNestedManyWithoutUsersInput
   absensi?: Prisma.absensiCreateNestedManyWithoutUsersInput
@@ -854,6 +889,7 @@ export type usersUncheckedCreateWithoutLikesInput = {
   address?: string | null
   image?: string | null
   role?: string
+  token?: string | null
   createdAt?: Date | string
   memberships?: Prisma.membershipsUncheckedCreateNestedManyWithoutUsersInput
   absensi?: Prisma.absensiUncheckedCreateNestedManyWithoutUsersInput
@@ -886,6 +922,7 @@ export type usersUpdateWithoutLikesInput = {
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.StringFieldUpdateOperationsInput | string
+  token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   memberships?: Prisma.membershipsUpdateManyWithoutUsersNestedInput
   absensi?: Prisma.absensiUpdateManyWithoutUsersNestedInput
@@ -903,6 +940,7 @@ export type usersUncheckedUpdateWithoutLikesInput = {
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.StringFieldUpdateOperationsInput | string
+  token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   memberships?: Prisma.membershipsUncheckedUpdateManyWithoutUsersNestedInput
   absensi?: Prisma.absensiUncheckedUpdateManyWithoutUsersNestedInput
@@ -919,6 +957,7 @@ export type usersCreateWithoutFavouritesInput = {
   address?: string | null
   image?: string | null
   role?: string
+  token?: string | null
   createdAt?: Date | string
   memberships?: Prisma.membershipsCreateNestedManyWithoutUsersInput
   absensi?: Prisma.absensiCreateNestedManyWithoutUsersInput
@@ -936,6 +975,7 @@ export type usersUncheckedCreateWithoutFavouritesInput = {
   address?: string | null
   image?: string | null
   role?: string
+  token?: string | null
   createdAt?: Date | string
   memberships?: Prisma.membershipsUncheckedCreateNestedManyWithoutUsersInput
   absensi?: Prisma.absensiUncheckedCreateNestedManyWithoutUsersInput
@@ -968,6 +1008,7 @@ export type usersUpdateWithoutFavouritesInput = {
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.StringFieldUpdateOperationsInput | string
+  token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   memberships?: Prisma.membershipsUpdateManyWithoutUsersNestedInput
   absensi?: Prisma.absensiUpdateManyWithoutUsersNestedInput
@@ -985,6 +1026,7 @@ export type usersUncheckedUpdateWithoutFavouritesInput = {
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.StringFieldUpdateOperationsInput | string
+  token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   memberships?: Prisma.membershipsUncheckedUpdateManyWithoutUsersNestedInput
   absensi?: Prisma.absensiUncheckedUpdateManyWithoutUsersNestedInput
@@ -1001,6 +1043,7 @@ export type usersCreateWithoutCommentsInput = {
   address?: string | null
   image?: string | null
   role?: string
+  token?: string | null
   createdAt?: Date | string
   memberships?: Prisma.membershipsCreateNestedManyWithoutUsersInput
   absensi?: Prisma.absensiCreateNestedManyWithoutUsersInput
@@ -1018,6 +1061,7 @@ export type usersUncheckedCreateWithoutCommentsInput = {
   address?: string | null
   image?: string | null
   role?: string
+  token?: string | null
   createdAt?: Date | string
   memberships?: Prisma.membershipsUncheckedCreateNestedManyWithoutUsersInput
   absensi?: Prisma.absensiUncheckedCreateNestedManyWithoutUsersInput
@@ -1050,6 +1094,7 @@ export type usersUpdateWithoutCommentsInput = {
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.StringFieldUpdateOperationsInput | string
+  token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   memberships?: Prisma.membershipsUpdateManyWithoutUsersNestedInput
   absensi?: Prisma.absensiUpdateManyWithoutUsersNestedInput
@@ -1067,6 +1112,7 @@ export type usersUncheckedUpdateWithoutCommentsInput = {
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.StringFieldUpdateOperationsInput | string
+  token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   memberships?: Prisma.membershipsUncheckedUpdateManyWithoutUsersNestedInput
   absensi?: Prisma.absensiUncheckedUpdateManyWithoutUsersNestedInput
@@ -1083,6 +1129,7 @@ export type usersCreateWithoutNotification_logsInput = {
   address?: string | null
   image?: string | null
   role?: string
+  token?: string | null
   createdAt?: Date | string
   memberships?: Prisma.membershipsCreateNestedManyWithoutUsersInput
   absensi?: Prisma.absensiCreateNestedManyWithoutUsersInput
@@ -1100,6 +1147,7 @@ export type usersUncheckedCreateWithoutNotification_logsInput = {
   address?: string | null
   image?: string | null
   role?: string
+  token?: string | null
   createdAt?: Date | string
   memberships?: Prisma.membershipsUncheckedCreateNestedManyWithoutUsersInput
   absensi?: Prisma.absensiUncheckedCreateNestedManyWithoutUsersInput
@@ -1132,6 +1180,7 @@ export type usersUpdateWithoutNotification_logsInput = {
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.StringFieldUpdateOperationsInput | string
+  token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   memberships?: Prisma.membershipsUpdateManyWithoutUsersNestedInput
   absensi?: Prisma.absensiUpdateManyWithoutUsersNestedInput
@@ -1149,6 +1198,7 @@ export type usersUncheckedUpdateWithoutNotification_logsInput = {
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.StringFieldUpdateOperationsInput | string
+  token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   memberships?: Prisma.membershipsUncheckedUpdateManyWithoutUsersNestedInput
   absensi?: Prisma.absensiUncheckedUpdateManyWithoutUsersNestedInput
@@ -1251,6 +1301,7 @@ export type usersSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   address?: boolean
   image?: boolean
   role?: boolean
+  token?: boolean
   createdAt?: boolean
   memberships?: boolean | Prisma.users$membershipsArgs<ExtArgs>
   absensi?: boolean | Prisma.users$absensiArgs<ExtArgs>
@@ -1270,6 +1321,7 @@ export type usersSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   address?: boolean
   image?: boolean
   role?: boolean
+  token?: boolean
   createdAt?: boolean
 }, ExtArgs["result"]["users"]>
 
@@ -1281,6 +1333,7 @@ export type usersSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   address?: boolean
   image?: boolean
   role?: boolean
+  token?: boolean
   createdAt?: boolean
 }, ExtArgs["result"]["users"]>
 
@@ -1292,10 +1345,11 @@ export type usersSelectScalar = {
   address?: boolean
   image?: boolean
   role?: boolean
+  token?: boolean
   createdAt?: boolean
 }
 
-export type usersOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id_user" | "name" | "email" | "password" | "address" | "image" | "role" | "createdAt", ExtArgs["result"]["users"]>
+export type usersOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id_user" | "name" | "email" | "password" | "address" | "image" | "role" | "token" | "createdAt", ExtArgs["result"]["users"]>
 export type usersInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   memberships?: boolean | Prisma.users$membershipsArgs<ExtArgs>
   absensi?: boolean | Prisma.users$absensiArgs<ExtArgs>
@@ -1328,6 +1382,7 @@ export type $usersPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     address: string | null
     image: string | null
     role: string
+    token: string | null
     createdAt: Date
   }, ExtArgs["result"]["users"]>
   composites: {}
@@ -1766,6 +1821,7 @@ export interface usersFieldRefs {
   readonly address: Prisma.FieldRef<"users", 'String'>
   readonly image: Prisma.FieldRef<"users", 'String'>
   readonly role: Prisma.FieldRef<"users", 'String'>
+  readonly token: Prisma.FieldRef<"users", 'String'>
   readonly createdAt: Prisma.FieldRef<"users", 'DateTime'>
 }
     
