@@ -1,0 +1,80 @@
+# =========================
+# Dependencies
+# =========================
+node_modules
+bun.lockb.old
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# =========================
+# Build output
+# =========================
+dist
+build
+.out
+.next
+
+# =========================
+# Local env files (JANGAN include kecuali memang perlu)
+# =========================
+.env.local
+.env.development
+.env.test
+.env.production
+
+# NOTE:
+# kalau kamu BUTUH .env untuk prisma generate di Dockerfile,
+# JANGAN ignore .env utama
+# jadi JANGAN tulis:
+# .env
+
+# =========================
+# Git
+# =========================
+.git
+.gitignore
+
+# =========================
+# Docker
+# =========================
+Dockerfile*
+docker-compose*
+.dockerignore
+
+# =========================
+# OS files
+# =========================
+.DS_Store
+Thumbs.db
+
+# =========================
+# IDE
+# =========================
+.vscode
+.idea
+
+# =========================
+# Logs
+# =========================
+logs
+*.log
+
+# =========================
+# Tests
+# =========================
+coverage
+.nyc_output
+
+# =========================
+# Cache
+# =========================
+.cache
+.tmp
+temp
+
+# =========================
+# Misc
+# =========================
+README.md
+*.md

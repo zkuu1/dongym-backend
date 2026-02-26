@@ -2,27 +2,25 @@ import { Prisma, PrismaClient } from "../../../generated/prisma/client.js"
 
 export class UserRepository {
 
-    static findByNameUsers(
-        prisma: PrismaClient,
-        name: string
-    ) {
+    static findByNameUser(prisma: PrismaClient, name: string) {
         return prisma.users.findFirst({
-            where: {name}
+            where: { name }
         })
     }
 
-    static findByIdUsers(
-        prisma: PrismaClient,
-        id: number
-    ) {
+    static findByEmailUser(prisma: PrismaClient, email: string) {
+        return prisma.users.count({
+            where: {email}
+        })
+    }
+
+    static findByIdUser(prisma: PrismaClient, id_user: number) {
         return prisma.users.findUnique({
-            where: {id}
+            where: { id_user }
         })
     }
 
-    static getAllUsers(
-        prisma: PrismaClient
-    ) {
+    static getAllUsers(prisma: PrismaClient) {
         return prisma.users.findMany({
             include: {
                 memberships: true
@@ -30,7 +28,7 @@ export class UserRepository {
         })
     }
 
-    static createUsers(
+    static createUser(
         prisma: PrismaClient,
         data: Prisma.usersCreateInput
     ) {
@@ -39,6 +37,27 @@ export class UserRepository {
         })
     }
 
-    
+    static updateUserById(
+        prisma: PrismaClient,
+        data: Prisma.usersUpdateInput,
+        id_user: number
+    ) {
+        return prisma.users.update({
+            where: { id_user },
+            data,
+            include: {
+                memberships: true
+            }
+        })
+    }
+
+    static deleteUserById(
+        prisma: PrismaClient,
+        id_user: number
+    ) {
+        return prisma.users.delete({
+            where: { id_user }
+        })
+    }
 
 }
