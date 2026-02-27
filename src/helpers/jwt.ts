@@ -7,9 +7,9 @@ if (!JWT_SECRET) {
   throw new Error('JWT_SECRET is not defined in env');
 }
 
-export function generateAdminToken(payload: {
+export function generateUserToken(payload: {
   id: number;
-  name_admin: string;
+  name: string;
 }) {
   return jwt.sign(payload, JWT_SECRET, {
     expiresIn: JWT_EXPIRES,

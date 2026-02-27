@@ -21,7 +21,7 @@ export type loginUsersRequest = {
 
 // logout
 export type LogoutUsersRequest = {
-    id: string
+    id: number
 }
 
 // ========= data response =======
@@ -66,8 +66,8 @@ export function toUsersData(
     return {
         id: user.id_user,
         name: user.name,
-        password: user.name,
-        address: user.role,
+        password: user.password,
+        address: user.address,
         image: user.image,
         role: user.role,
         token: token

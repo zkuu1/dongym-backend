@@ -8,8 +8,14 @@ export class UserRepository {
         })
     }
 
-    static findByEmailUser(prisma: PrismaClient, email: string) {
+    static countByEmailUser(prisma: PrismaClient, email: string) {
         return prisma.users.count({
+            where: {email}
+        })
+    }
+
+    static findByEmailUser(prisma: PrismaClient, email: string) {
+        return prisma.users.findUnique({
             where: {email}
         })
     }
