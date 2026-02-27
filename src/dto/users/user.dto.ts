@@ -1,8 +1,5 @@
 import type {memberships, users} from "../../generated/prisma/client.js"
-import {
-    type PaginationMeta,
-    buildPaginationMeta
-} from "../../dto/pagination.dto.js"
+import { type PaginationMeta, buildPaginationMeta} from "../../dto/pagination.dto.js"
 
 
 // ======== request =========== 
@@ -53,7 +50,7 @@ export type MembershipsData = {
 
 
 
-// ========== wrapper =============
+// ========== Api Respon =============
 export type ApiResponse<T, M = unknown> = {
     message: string
     success: boolean
@@ -105,7 +102,7 @@ export function toUsersResponse (
     }
 }
 
-export function toUserListResponse<T, U> (
+export function toUsersListResponse<T, U> (
     items: T[],
     message: string,
     mapper: (item: T) => U,
