@@ -60,7 +60,8 @@ export type ApiResponse<T, M = unknown> = {
 
 // ========== function ==============
 export function toUsersData(
-    user: users
+    user: users,
+    token?: string
 ) : UsersData {
     return {
         id: user.id_user,
@@ -69,7 +70,7 @@ export function toUsersData(
         address: user.role,
         image: user.image,
         role: user.role,
-        token: user.token
+        token: token
     }
 }
 
@@ -93,12 +94,13 @@ export function toUsersResponse (
     user: users & { 
         memberships?: memberships[]
     },
-    message: string
+    message: string,
+    token?: string
 ) : ApiResponse<UsersData> {
     return {
         success: true,
         message,
-        data: toUsersData(user)
+        data: toUsersData(user, token)
     }
 }
 
