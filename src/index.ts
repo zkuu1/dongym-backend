@@ -6,7 +6,7 @@ const app = new Hono<ContextWithPrisma>();
 
 import withPrisma from './libs/prisma.js';
 import { UserController } from './internal/users/user/user.controller.js';
-import { PublicRoute } from './routes/public.route.js';
+import { PublicRoute } from './routes/route.js';
 
 const route = new PublicRoute
 app.route(('/'),route.app)

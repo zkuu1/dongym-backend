@@ -17,6 +17,31 @@ import type { PaginationMeta } from "../../../dto/pagination.dto.js";
 
 export class UsersService {
 
+    static async registerUser(
+        prisma: PrismaClient,
+        data: Prisma.usersCreateInput
+    ): Promise<ApiResponse<UsersData>> {
+
+        const duplicate = await UserRepository.countByEmailUser(
+            prisma,
+            data.email
+        );
+
+        if (duplicate > 1) {
+            throw new HTTPException(400, {
+                message: 'User with the same email already exist'
+            })
+        }
+
+        const hashedPassword = await bcrypt.hash(data.password, 10);
+        const user = await UserRepository.createUser(prisma, {
+            ...data,
+            password: hashedPassword,
+        });
+
+        return toUsersResponse(user, 'User register successfully')
+    }
+
     static async loginUser(
     prisma: PrismaClient,
     data: { email: string; password: string }
@@ -71,13 +96,13 @@ export class UsersService {
         });
     }
 
-    await UserRepository.updateUserById(
+    const updatedUser = await UserRepository.updateUserById(
         prisma,
-        { token: null },  
+        { token: null },
         id
     );
 
-    return toUsersResponse(user, "Logout success");
+    return toUsersResponse(updatedUser, "Logout success");
     }
 
     static async getAllUsers(
