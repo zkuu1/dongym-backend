@@ -17,3 +17,4 @@ export function buildPaginationMeta(
     totalPages: Math.ceil(total / limit),
   }
 }
+
