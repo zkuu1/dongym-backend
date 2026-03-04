@@ -10,7 +10,8 @@ export type CreateUsersRequest = {
     password: string
     address?: string
     image?: string
-    role: string
+    public_id?: string
+    role?: string | null
 }
 
 // login
@@ -29,6 +30,7 @@ export type LogoutUsersRequest = {
 export type UsersData = {
     id: number
     name: string
+    email: string
     password: string
     address?: string | null
     image?: string | null
@@ -66,6 +68,7 @@ export function toUsersData(
     return {
         id: user.id_user,
         name: user.name,
+        email: user.email,
         password: user.password,
         address: user.address,
         image: user.image,

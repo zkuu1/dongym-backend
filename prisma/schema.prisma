@@ -81,6 +81,7 @@ model products {
   name         String
   description  String?
   image        String?
+  public_id   String?
   price        Float
   stock        Int       @default(0)
   createdAt    DateTime  @default(now())

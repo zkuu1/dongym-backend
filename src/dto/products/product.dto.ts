@@ -8,7 +8,7 @@ export type CreateProductsRequest = {
     name: string
     description: string
     image: string
-    price: string
+    price: number
     stock: string | number
 }
 

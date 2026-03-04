@@ -5,17 +5,18 @@ import { safeJson } from "../../../helpers/safeJson..js";
 import { UserValidation } from "./user.validation.js";
 import { UsersService } from "./user.service.js";
 import { HTTPException } from "hono/http-exception";
-import { authAdminMiddleware } from "../../../middlewares/admin.middleware.js";
+import { authMiddleware } from "../../../middlewares/auth.middleware.js";
+import { requireRole } from "../../../middlewares/admin.middleware.js";
 
 export const UserController = new Hono<AppContext>
 
-UserController.get('/user', authAdminMiddleware, withPrisma, async(c) => {
+UserController.get('/user', authMiddleware, requireRole('admin'), withPrisma, async(c) => {
     const prisma = c.get('prisma')
     const response = await UsersService.getAllUsers(prisma)
     return c.json(response, 201)
 })
 
-UserController.get('/user/:id', authAdminMiddleware, withPrisma, async(c) => {
+UserController.get('/user/:id', authMiddleware, requireRole('admin'), withPrisma, async(c) => {
     const prisma = c.get('prisma')
     const id = Number (c.req.param('id'))
     
@@ -27,7 +28,7 @@ UserController.get('/user/:id', authAdminMiddleware, withPrisma, async(c) => {
     return c.json(response, 301)
 })
 
-UserController.post('/user', authAdminMiddleware, withPrisma, async(c) => {
+UserController.post('/user', authMiddleware, requireRole('admin'), withPrisma, async(c) => {
     const prisma = c.get('prisma')
     const raw = await safeJson(c)
     const validated = UserValidation.CREATE.parse(raw)
@@ -51,7 +52,7 @@ UserController.post('/user/login', withPrisma, async(c) => {
     return c.json(response, 201)
 })
 
-UserController.post('/user/logout', withPrisma, async(c) => {
+UserController.post('/user/logout/:id', withPrisma, async(c) => {
     const prisma = c.get('prisma')
     const id = Number (c.req.param('id'))
     const response = await UsersService.logoutUser(prisma, id)
@@ -59,7 +60,7 @@ UserController.post('/user/logout', withPrisma, async(c) => {
 })
 
 
-UserController.patch('/user/:id',authAdminMiddleware, withPrisma, async(c) => {
+UserController.patch('/user/:id', authMiddleware, withPrisma, async(c) => {
     const prisma = c.get('prisma')
     const id = Number (c.req.param('id'))
 
@@ -69,12 +70,12 @@ UserController.patch('/user/:id',authAdminMiddleware, withPrisma, async(c) => {
 
     const raw = await safeJson(c)
     const validated = UserValidation.UPDATE.parse(raw)
-    const response = UsersService.updateUser(prisma, validated, id)
+    const response = await UsersService.updateUser(prisma, validated, id)
 
     return c.json(response, 201)
 })
 
-UserController.delete('/user/:id', authAdminMiddleware, withPrisma, async(c) => {
+UserController.delete('/user/:id', authMiddleware, withPrisma, async(c) => {
     const prisma = c.get('prisma')
     const id = Number (c.req.param('id'))
 

@@ -5,7 +5,7 @@ export class ProductValidation {
         idCategory: z.preprocess(
         (v) => (v == null ? '' : v),
          z.string()
-         .min(3, 'Id Category must be at least 3 characters long')
+         .min(1, 'Id Category must be at least 1 characters long')
          .max(50, 'Id Categroy maximum 50 characters'),
         ),
 
@@ -26,22 +26,16 @@ export class ProductValidation {
         image: z.preprocess(
         (v) => (v == null ? '' : v),
          z.string()
-         .min(3, 'Name Product must be at least 3 characters long')
-         .max(50, 'Name Product maximum 50 characters'),
         ),
 
         price: z.preprocess(
         (v) => (v == null ? '' : v),
-         z.string()
-         .min(3, 'Name Product must be at least 3 characters long')
-         .max(50, 'Name Product maximum 50 characters'),
+         z.coerce.number().min(1)
         ),
 
         stock: z.preprocess(
         (v) => (v == null ? '' : v),
-         z.int()
-         .min(3, 'Name Product must be at least 3 characters long')
-         .max(50, 'Name Product maximum 50 characters'),
+        z.coerce.number().min(1)
         ),
     })
 
@@ -49,7 +43,7 @@ export class ProductValidation {
         idCategory: z.preprocess(
         (v) => (v == null ? '' : v),
          z.string()
-         .min(3, 'Id Category must be at least 3 characters long')
+         .min(1, 'Id Category must be at least 1 characters long')
          .max(50, 'Id Categroy maximum 50 characters'),
         ).optional(),
 
@@ -70,22 +64,16 @@ export class ProductValidation {
         image: z.preprocess(
         (v) => (v == null ? '' : v),
          z.string()
-         .min(3, 'Name Product must be at least 3 characters long')
-         .max(50, 'Name Product maximum 50 characters'),
         ).optional(),
 
         price: z.preprocess(
         (v) => (v == null ? '' : v),
-         z.float32()
-         .min(3, 'Name Product must be at least 3 characters long')
-         .max(50, 'Name Product maximum 50 characters'),
+         z.coerce.number().min(1)
         ).optional(),
 
         stock: z.preprocess(
         (v) => (v == null ? '' : v),
-         z.int()
-         .min(3, 'Name Product must be at least 3 characters long')
-         .max(50, 'Name Product maximum 50 characters'),
+         z.coerce.number().min(1)
         ).optional(),
     })
 }

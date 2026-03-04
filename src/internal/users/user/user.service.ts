@@ -18,29 +18,41 @@ import type { PaginationMeta } from "../../../dto/pagination.dto.js";
 export class UsersService {
 
     static async registerUser(
-        prisma: PrismaClient,
-        data: Prisma.usersCreateInput
-    ): Promise<ApiResponse<UsersData>> {
+    prisma: PrismaClient,
+    data: Prisma.usersCreateInput
+): Promise<ApiResponse<UsersData>> {
 
-        const duplicate = await UserRepository.countByEmailUser(
-            prisma,
-            data.email
-        );
+    const duplicate = await UserRepository.countByEmailUser(
+        prisma,
+        data.email
+    );
 
-        if (duplicate > 1) {
-            throw new HTTPException(400, {
-                message: 'User with the same email already exist'
-            })
-        }
+    if (duplicate > 0) {
+        throw new HTTPException(400, {
+            message: 'Email already exists'
+        });
+    }
 
-        const hashedPassword = await bcrypt.hash(data.password, 10);
+    const hashedPassword = await bcrypt.hash(data.password, 10);
+
+    try {
         const user = await UserRepository.createUser(prisma, {
             ...data,
             password: hashedPassword,
         });
 
-        return toUsersResponse(user, 'User register successfully')
+        return toUsersResponse(user, 'User register successfully');
+
+    } catch (error: any) {
+        if (error.code === 'P2002') {
+            throw new HTTPException(400, {
+                message: 'Email already exists'
+            });
+        }
+
+        throw error;
     }
+}
 
     static async loginUser(
     prisma: PrismaClient,
@@ -72,6 +84,7 @@ export class UsersService {
     const token = generateUserToken({
         id: user.id_user,
         name: user.name,
+        role: user.role
     });
 
     await UserRepository.updateUserById(
