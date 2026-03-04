@@ -4,12 +4,12 @@ import { type PaginationMeta, buildPaginationMeta } from "../pagination.dto.js"
 // request
 // req
 export type CreateProductsRequest = {
-    idCategory: number
+    idCategory: string
     name: string
     description: string
     image: string
     price: string
-    stock: string
+    stock: string | number
 }
 
 // ======== data response =======
