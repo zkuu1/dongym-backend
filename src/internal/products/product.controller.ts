@@ -60,11 +60,25 @@ ProductController.patch('/product/:id', authMiddleware, requireRole('admin'), wi
       idCategory: body.idCategory
     });
 
+    const isEmpty =
+      !validate.name &&
+      !validate.description &&
+      !validate.price &&
+      !validate.stock &&
+      !validate.idCategory &&
+      !file
+
+    if (isEmpty) {
+      throw new HTTPException(400, {
+        message: 'No data provided to update'
+      })
+    }
+
     const response = await ProductsService.updateProduct(prisma, validate, id, file)
-    return c.json(response, 201)
+    return c.json(response, 200)
 })
 
-ProductController.delete('/product', authMiddleware, requireRole('admin'),  withPrisma, async(c) => {
+ProductController.delete('/product/:id', authMiddleware, requireRole('admin'),  withPrisma, async(c) => {
     const prisma = c.get('prisma')
     const id = Number (c.req.param('id'))
     if (Number.isNaN(id)) {

@@ -59,7 +59,7 @@ export class ProductValidation {
          z.string()
          .min(3, 'Description Product must be at least 3 characters long')
          .max(50, 'Description maximum 50 characters'),
-        ),
+        ).optional(),
 
         image: z.preprocess(
         (v) => (v == null ? '' : v),
@@ -75,5 +75,5 @@ export class ProductValidation {
         (v) => (v == null ? '' : v),
          z.coerce.number().min(1)
         ).optional(),
-    })
+    }).strict()
 }
