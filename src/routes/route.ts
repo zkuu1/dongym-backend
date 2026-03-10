@@ -1,6 +1,7 @@
 import { Hono } from 'hono';
 import { UserController } from '../internal/users/user/user.controller.js';
 import { ProductController } from '../internal/products/product.controller.js';
+import { CategoryController } from '../internal/categories/category.controller.js';
 
 export class PublicRoute  {
     public app: Hono;
@@ -13,5 +14,6 @@ export class PublicRoute  {
   private routes() {
     this.app.route('/api', UserController);
     this.app.route('/api', ProductController)
+    this.app.route('/api', CategoryController)
   }
 }

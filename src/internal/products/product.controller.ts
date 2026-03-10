@@ -7,13 +7,26 @@ import { authMiddleware } from "../../middlewares/auth.middleware.js";
 import { requireRole } from "../../middlewares/admin.middleware.js";
 import { ProductsService } from "./product.service.js";
 import { ProductValidation } from "./product.validation.js";
+import { ONE_DAY, redis } from "../../helpers/redis.js";
 
 export const ProductController = new Hono<AppContext>
 
 ProductController.get('/product', withPrisma, async(c) => {
+
+    const cacheKey = "products:all"
+    const cachedData = await redis.get(cacheKey)
+
+     if (cachedData) {
+    c.header("x-cache", "HIT")
+     return c.json(cachedData, 200);
+    }
+
     const prisma = c.get('prisma')
     const response = await ProductsService.getAllProducts(prisma)
-    return c.json(response, 201)
+
+    c.header("x-cache", "MISS")
+    await redis.set(cacheKey, response, {ex: ONE_DAY})
+    return c.json(response, 200)
 })
 
 ProductController.get('/product/:id', withPrisma, async(c) => {
@@ -23,7 +36,7 @@ ProductController.get('/product/:id', withPrisma, async(c) => {
     throw new HTTPException(400, { message: 'Invalid product id' });
   }
     const response = await ProductsService.getProductById(prisma, id)
-    return c.json(response, 201)
+    return c.json(response, 200)
 })
 
 ProductController.post('/product', authMiddleware, requireRole('admin'), withPrisma, async(c) => {
@@ -40,6 +53,8 @@ ProductController.post('/product', authMiddleware, requireRole('admin'), withPri
     });
 
     const response = await ProductsService.createProduct(prisma, validate, file)
+
+    await redis.del("products:all")
     return c.json(response, 201)
 })
 
@@ -75,6 +90,7 @@ ProductController.patch('/product/:id', authMiddleware, requireRole('admin'), wi
     }
 
     const response = await ProductsService.updateProduct(prisma, validate, id, file)
+    await redis.del("products:all")
     return c.json(response, 200)
 })
 
@@ -86,5 +102,6 @@ ProductController.delete('/product/:id', authMiddleware, requireRole('admin'),  
     } 
 
     const response = await ProductsService.deleteProduct(prisma, id)
+    await redis.del("products:all")
     return c.json(response, 201)
 })

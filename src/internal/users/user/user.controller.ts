@@ -7,12 +7,24 @@ import { UsersService } from "./user.service.js";
 import { HTTPException } from "hono/http-exception";
 import { authMiddleware } from "../../../middlewares/auth.middleware.js";
 import { requireRole } from "../../../middlewares/admin.middleware.js";
+import { ONE_DAY, redis } from "../../../helpers/redis.js";
 
 export const UserController = new Hono<AppContext>
 
 UserController.get('/user', authMiddleware, requireRole('admin'), withPrisma, async(c) => {
+    const cacheKey = "users:all"
+    const cachedData =  await redis.get(cacheKey)
+
+     if (cachedData) {
+    c.header("x-cache", "HIT")
+     return c.json(cachedData, 200);
+  }
+
     const prisma = c.get('prisma')
     const response = await UsersService.getAllUsers(prisma)
+
+    c.header("x-cache", "MISS")
+    await redis.set(cacheKey, response, {ex: ONE_DAY})
     return c.json(response, 201)
 })
 
@@ -33,6 +45,8 @@ UserController.post('/user', authMiddleware, requireRole('admin'), withPrisma, a
     const raw = await safeJson(c)
     const validated = UserValidation.CREATE.parse(raw)
     const response = await UsersService.createUser(prisma, validated)
+    
+    await redis.del("users:all")
     return c.json (response, 201)
 })
 
@@ -41,6 +55,8 @@ UserController.post('/user/register', withPrisma, async(c) => {
     const raw = await safeJson(c)
     const validated = UserValidation.REGISTER.parse(raw)
     const response = await UsersService.registerUser(prisma, validated)
+
+    await redis.del("users:all")
     return c.json(response, 201)
 })
 
@@ -56,6 +72,8 @@ UserController.post('/user/logout/:id', withPrisma, async(c) => {
     const prisma = c.get('prisma')
     const id = Number (c.req.param('id'))
     const response = await UsersService.logoutUser(prisma, id)
+
+    await redis.del("users:all")
     return c.json(response, 201)
 })
 
@@ -72,6 +90,7 @@ UserController.patch('/user/:id', authMiddleware, withPrisma, async(c) => {
     const validated = UserValidation.UPDATE.parse(raw)
     const response = await UsersService.updateUser(prisma, validated, id)
 
+    await redis.del("users:all")
     return c.json(response, 201)
 })
 
@@ -84,6 +103,8 @@ UserController.delete('/user/:id', authMiddleware, withPrisma, async(c) => {
      }
 
     const response = await UsersService.deleteUser(prisma, id)
+
+    await redis.del("users:all")
     return c.json(response, 201)
     
 })
