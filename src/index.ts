@@ -6,13 +6,16 @@ import { UserController } from './internal/users/user/user.controller.js';
 import { PublicRoute } from './routes/route.js';
 import { errorHandler } from './handlers/errorHandler.js';
 import { corsMiddleware } from './middlewares/cors.middleware.js';
+import { GoogleRoute } from './routes/oauth/google.route.js';
 
 
 const app = new Hono<ContextWithPrisma>();
 const route = new PublicRoute
+const google = new GoogleRoute
 
 app.route('/', corsMiddleware)
 app.route(('/'),route.app)
+app.route(('/'), google.app)
 
 app.onError(errorHandler)
 
