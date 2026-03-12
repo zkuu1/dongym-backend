@@ -7,11 +7,14 @@ import { PublicRoute } from './routes/route.js';
 import { errorHandler } from './handlers/errorHandler.js';
 import { corsMiddleware } from './middlewares/cors.middleware.js';
 import { GoogleRoute } from './routes/oauth/google.route.js';
+import { logger } from 'hono/logger';
 
 
 const app = new Hono<ContextWithPrisma>();
 const route = new PublicRoute
 const google = new GoogleRoute
+
+app.use('*', logger())
 
 app.route('/', corsMiddleware)
 app.route(('/'),route.app)

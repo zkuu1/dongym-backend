@@ -8,6 +8,12 @@ export class MembershipRepository {
         })
     }
 
+    static findByIdMembership(prisma: PrismaClient, id_membership: number) {
+        return prisma.memberships.findUnique({
+            where: {id_membership}
+        })
+    }
+
     static countByNameMembership(prisma: PrismaClient, name: string) {
         return prisma.memberships.count({
             where: { name }
