@@ -99,6 +99,8 @@ model likes {
   status      Boolean  @default(false)
   createdAt   DateTime @default(now())
 
+  @@unique([id_user, id_product])
+  
   users    users    @relation(fields: [id_user], references: [id_user], onDelete: Cascade)
   products products @relation(fields: [id_product], references: [id_product], onDelete: Cascade)
 }

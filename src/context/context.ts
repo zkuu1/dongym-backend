@@ -6,6 +6,10 @@ export type ContextWithPrisma = {
   };
 };
 
+export type UserPayload = {
+  id: number;
+};
+
 export type AdminPayload = {
   id: number;
   name_admin: string;
@@ -16,6 +20,8 @@ export type AppContext = {
   Variables: {
     prisma: PrismaClient;
     admin: AdminPayload;
+    user?: UserPayload;
   };
 };
+
 

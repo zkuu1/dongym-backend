@@ -2,6 +2,8 @@
 
 export class MembershipRepository {
 
+    constructor(private prisma: PrismaClient) {}
+
     static findByNameMembership(prisma: PrismaClient, name: string) {
         return prisma.memberships.findFirst({
             where: { name }
