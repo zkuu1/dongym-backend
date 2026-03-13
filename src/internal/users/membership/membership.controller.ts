@@ -10,6 +10,7 @@ import { MembershipValidation } from "./membership.validation.js";
 import { safeJson } from "../../../helpers/safeJson..js";
 import { Prisma } from "../../../generated/prisma/client.js";
 
+
 export const MembershipController =  new Hono<AppContext>()
 
 MembershipController.get('/membership', withPrisma, async(c) => {
@@ -35,7 +36,7 @@ MembershipController.get('/membership/:id', withPrisma, async(c) => {
     const id = Number(c.req.param('id'))
 
     if (Number.isNaN(id)) {
-    throw new HTTPException(400, { message: 'Invalid product id' });
+    throw new HTTPException(400, { message: 'Invalid membership id' });
     }
     const response = await MembershipService.getMembershipById(prisma,id)
     return c.json(response, 200)
@@ -59,5 +60,34 @@ MembershipController.post('/membership', withPrisma, authMiddleware, requireRole
     }
 
     const response = await MembershipService.createMembership(prisma, prismaData)
+    await redis.del("membership:all")
     return c.json(response, 201)
+})
+
+MembershipController.patch('/membership/:id', withPrisma, authMiddleware, requireRole('admin'), async(c) => {
+    const prisma = c.get('prisma')
+    const raw = await safeJson(c)
+    const validated = MembershipValidation.UPDATE.parse(raw)
+
+
+    const id = Number(c.req.param('id'))
+    if (Number.isNaN(id)) {
+    throw new HTTPException(400, { message: 'Invalid membership id' });
+    }
+
+    const response = await MembershipService.updateMembershipById(prisma, id, validated)
+    await redis.del("membership:all")
+    return c.json(response, 201)
+})
+
+MembershipController.delete('/membership/:id', withPrisma, authMiddleware, requireRole('admin'), async(c) => {
+    const prisma = c.get('prisma')
+    const id = Number(c.req.param('id'))
+    if (Number.isNaN(id)) {
+    throw new HTTPException(400, { message: 'Invalid membership id' });
+    }
+
+    const response = await MembershipService.deleteMembershipById(prisma, id)
+    await redis.del("membership:all")
+    return c.json(response, 200)
 })

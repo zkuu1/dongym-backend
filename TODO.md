@@ -1,1 +1,7 @@
-# Fix Membership TypeScript Error&#10;&#10;## Steps:&#10;- [x] Step 1: Update membership.validation.ts&#10;- [x] Step 2: Update controller (transform + method)&#10;- [x] Step 2.5: Fix service method name&#10;- [x] Step 4: Update membership.dto.ts&#10;- [ ] Step 5: Update route.ts import (after rename)&#10;- [ ] Step 3: Rename memebrship.controller.ts to membership.controller.ts&#10;- [ ] Step 6: Fix Zod TS warnings + complete
+# TODO: Fix TypeScript error in like service
+
+## Steps:
+- [x] Step 1: Update src/dto/like/like.dto.ts - Add toCountResponse function for count responses.
+- [x] Step 2: Update src/internal/users/like/like.service.ts - Use toCountResponse in countProductLikes instead of toLikeResponse.
+- [ ] Step 3: Verify TypeScript compilation and test endpoint.
+
