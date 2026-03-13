@@ -4,6 +4,7 @@ import { ProductController } from '../internal/products/product.controller.js';
 import { CategoryController } from '../internal/categories/category.controller.js';
 import { MembershipController } from '../internal/users/membership/membership.controller.js';
 import { LikeController } from '../internal/users/like/like.controller.js';
+import { FavouriteController } from '../internal/users/favourite/favourite.controller.js';
 
 export class PublicRoute  {
     public app: Hono;
@@ -19,5 +20,6 @@ export class PublicRoute  {
     this.app.route('/api', CategoryController)
     this.app.route('/api', MembershipController)
     this.app.route('/api', LikeController)
+    this.app.route('/api', FavouriteController)
   }
 }
