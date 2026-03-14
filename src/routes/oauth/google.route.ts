@@ -10,6 +10,6 @@ export class GoogleRoute  {
   }
 
   private routes() {
-   this.app.route('/', GoogleController)
+   this.app.route('/api', GoogleController)
   }
 }
