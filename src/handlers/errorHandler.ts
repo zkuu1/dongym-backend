@@ -6,7 +6,7 @@ export const errorHandler = (err: unknown, c: any) => {
   if (err instanceof ZodError) {
     return c.json(
       {
-        message: 'Validation error',
+        message: 'Validation Error',
         errors: formatZodIssues(err.issues),
       },
       400,
@@ -17,6 +17,9 @@ export const errorHandler = (err: unknown, c: any) => {
     return c.json(
       {
         message: err.message,
+        errors: {
+          general: err.message,
+        },
       },
       err.status,
     );
@@ -27,6 +30,9 @@ export const errorHandler = (err: unknown, c: any) => {
   return c.json(
     {
       message: 'Internal Server Error',
+      errors: {
+        general: 'An unexpected error occurred on the server.',
+      },
     },
     500,
   );

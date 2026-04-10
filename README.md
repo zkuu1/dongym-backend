@@ -4,10 +4,13 @@ This example shows how to implement a **REST API with TypeScript** using [Hono](
 
 ## Project structure
 
-- `src/index.ts` – defines the Hono server and the REST routes (`/signup`, `/post`, `/feed`, …).
-- `src/lib/prisma.ts` – lightweight middleware that creates a Prisma Client using `@prisma/adapter-pg` and exposes it via Hono’s context.
-- `prisma/schema.prisma` – Prisma schema with the `User` and `Post` models that back the API.
-- `prisma/seed.ts` – seeds the database with sample users and posts.
+For a detailed breakdown of the project architecture and directory organization, please refer to [PROJECT_STRUCTURE.md](./PROJECT_STRUCTURE.md).
+
+Quick overview:
+- `src/index.ts` – Application entry point and server definition.
+- `src/libs/prisma.ts` – Prisma Client initialization.
+- `prisma/schema.prisma` – Database schema models.
+- `prisma/seed.ts` – Database seeding script.
 
 ## Getting started
 
