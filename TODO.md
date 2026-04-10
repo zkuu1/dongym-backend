@@ -1,7 +1,8 @@
-# TODO: Fix TypeScript error in like service
+# Fix User API Response to Include Memberships
 
 ## Steps:
-- [x] Step 1: Update src/dto/like/like.dto.ts - Add toCountResponse function for count responses.
-- [x] Step 2: Update src/internal/users/like/like.service.ts - Use toCountResponse in countProductLikes instead of toLikeResponse.
-- [ ] Step 3: Verify TypeScript compilation and test endpoint.
+- [x] 1. Update src/dto/users/user.dto.ts: Fix toUsersData to map memberships and hide password
+- [ ] 2. Clear Redis cache: redis-cli del "users:all"
+- [ ] 3. Test GET /user endpoint (admin auth) - verify memberships included
+- [ ] 4. Complete
 

@@ -31,7 +31,6 @@ export type UsersData = {
     id: number
     name: string
     email: string
-    password: string
     address?: string | null
     image?: string | null
     role: string
@@ -62,17 +61,17 @@ export type ApiResponse<T, M = unknown> = {
 
 // ========== function ==============
 export function toUsersData(
-    user: users,
+    user: users & { memberships?: memberships[] },
     token?: string
 ) : UsersData {
     return {
         id: user.id_user,
         name: user.name,
         email: user.email,
-        password: user.password,
         address: user.address,
         image: user.image,
         role: user.role,
+        memberships: user.memberships?.map(toMembershipsData) ?? [],
         token: token
     }
 }

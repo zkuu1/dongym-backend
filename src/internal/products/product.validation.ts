@@ -6,7 +6,7 @@ export class ProductValidation {
         (v) => (v == null ? '' : v),
          z.string()
          .min(1, 'Id Category must be at least 1 characters long')
-         .max(50, 'Id Categroy maximum 50 characters'),
+         .max(50, 'Id Category maximum 50 characters'),
         ),
 
          name: z.preprocess(
@@ -44,7 +44,7 @@ export class ProductValidation {
         (v) => (v == null ? '' : v),
          z.string()
          .min(1, 'Id Category must be at least 1 characters long')
-         .max(50, 'Id Categroy maximum 50 characters'),
+         .max(50, 'Id Category maximum 50 characters'),
         ).optional(),
 
          name: z.preprocess(
