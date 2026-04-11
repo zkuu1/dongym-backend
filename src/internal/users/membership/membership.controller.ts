@@ -60,7 +60,7 @@ MembershipController.post('/membership', withPrisma, authMiddleware, requireRole
     }
 
     const response = await MembershipService.createMembership(prisma, prismaData)
-    await redis.del("membership:all")
+    await redis.del("memberships:all")
     return c.json(response, 201)
 })
 
@@ -75,8 +75,20 @@ MembershipController.patch('/membership/:id', withPrisma, authMiddleware, requir
     throw new HTTPException(400, { message: 'Invalid membership id' });
     }
 
-    const response = await MembershipService.updateMembershipById(prisma, id, validated)
-    await redis.del("membership:all")
+    const prismaData: Prisma.membershipsUpdateInput = {
+        users: validated.idUser ? {
+            connect: {
+                id_user: validated.idUser
+            }
+        } : undefined,
+        name: validated.name,
+        description: validated.description ?? undefined,
+        no_member: validated.noMember ?? undefined,
+        expired_at: validated.expiredAt
+    }
+
+    const response = await MembershipService.updateMembershipById(prisma, id, prismaData)
+    await redis.del("memberships:all")
     return c.json(response, 201)
 })
 
@@ -88,6 +100,6 @@ MembershipController.delete('/membership/:id', withPrisma, authMiddleware, requi
     }
 
     const response = await MembershipService.deleteMembershipById(prisma, id)
-    await redis.del("membership:all")
+    await redis.del("memberships:all")
     return c.json(response, 200)
 })

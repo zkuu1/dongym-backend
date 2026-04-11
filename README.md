@@ -1,77 +1,83 @@
-# REST API Example with Hono & Prisma
+# 🏗️ Project Structure Documentation
 
-This example shows how to implement a **REST API with TypeScript** using [Hono](https://hono.dev/) and [Prisma Client](https://www.prisma.io/docs/concepts/components/prisma-client). It connects to a Postgres database via the [`@prisma/adapter-pg`](https://www.prisma.io/docs/orm/overview/databases/postgresql/pg-driver-adapter) driver adapter and a normal `postgresql://` connection string (no Accelerate/Data Proxy required).
+This document provides a comprehensive overview of the **DonGym Backend** project structure, architecture, and organization.
 
-## Project structure
+---
 
-For a detailed breakdown of the project architecture and directory organization, please refer to [PROJECT_STRUCTURE.md](./PROJECT_STRUCTURE.md).
+## 📂 Directory Overview
 
-Quick overview:
-- `src/index.ts` – Application entry point and server definition.
-- `src/libs/prisma.ts` – Prisma Client initialization.
-- `prisma/schema.prisma` – Database schema models.
-- `prisma/seed.ts` – Database seeding script.
-
-## Getting started
-
-### 1. Download the example and install dependencies
-
-```bash
-npx try-prisma@latest --template orm/hono --name hono
-cd hono
-bun install
+```text
+dongym-backend/
+├── 📁 prisma/             # Database schema and migrations
+├── 📁 src/                # Root source directory
+│   ├── 📁 context/        # Hono context type definitions
+│   ├── 📁 dto/            # Data Transfer Objects (Zod schemas)
+│   ├── 📁 handlers/       # Global handlers (Error, Upload, etc.)
+│   ├── 📁 helpers/        # Utility functions (JWT, Redis, Responses)
+│   ├── 📁 internal/       # Core business logic and controllers
+│   ├── 📁 libs/           # External library configurations (Prisma, Cloudinary)
+│   ├── 📁 middlewares/    # Custom Hono middlewares (CORS, Auth)
+│   ├── 📁 routes/          # API Route definitions
+│   └── 📄 index.ts        # Application entry point
+├── 📁 docs/               # (Currenty Empty) Project documentation
+├── 📄 .env                # Environment variables
+├── 📄 docker-compose.yaml # Docker orchestration
+├── 📄 package.json        # Dependencies and scripts
+└── 📄 tsconfig.json       # TypeScript configuration
 ```
 
-> Alternatively clone this repo and run `bun install` inside `prisma-examples/orm/hono`.
+---
 
-### 2. Configure `DATABASE_URL`
+## 🛠️ Main Components
 
-Create a Postgres database (Prisma Postgres, Supabase, Railway, Docker, etc.) and copy the direct connection string:
+### 1. `src/index.ts`
+The entry point of the application. It initializes the Hono app, registers middlewares (logger, CORS), defines routes, and starts the server (default port: 3000).
 
-```
-postgresql://USER:PASSWORD@HOST:PORT/DATABASE?sslmode=require
-```
+### 2. `src/internal/` (Business Logic)
+This is where the core logic of the application resides. It is partitioned by feature modules:
+- **users**: Core user management, memberships, likes, favorites, and comments.
+- **products**: Product management logic.
+- **categories**: Product category logic.
 
-Create a `.env` file in the project root and add the URL:
+Each module typically contains its own **Controllers** that handle requests and interact with the database.
 
-```bash
-touch .env
+### 3. `src/routes/`
+Organizes the API endpoints.
+- `route.ts`: Aggregates different controllers and maps them to URL prefixes (e.g., `/api`).
+- `oauth/`: Contains specific routes for OAuth providers like Google.
 
-# .env
-DATABASE_URL="postgresql://USER:PASSWORD@HOST:5432/DATABASE?sslmode=require"
-```
+### 4. `src/dto/` (Data Validation)
+Uses **Zod** to define schemas for request bodies, parameters, and query strings. This ensures data integrity and provides TypeScript type safety across the application.
 
-### 3. Migrate & seed the database
+### 5. `src/helpers/` & `src/libs/`
+- **libs**: Contains initializations for shared resources like the `PrismaClient` and `Cloudinary`.
+- **helpers**: Contains pure utility functions for tasks like JWT generation/verification, standardized error responses, and Redis client access.
 
-```bash
-bunx prisma migrate dev --name init
-bunx prisma db seed
-```
+### 6. `src/middlewares/`
+Custom Hono middlewares used for cross-cutting concerns:
+- `cors.middleware.ts`: Configures Cross-Origin Resource Sharing.
 
-This creates the tables defined in [`prisma/schema.prisma`](./prisma/schema.prisma) and runs [`prisma/seed.ts`](./prisma/seed.ts) to insert demo data.
+### 7. `prisma/`
+The database layer.
+- `schema.prisma`: The source of truth for the database schema.
+- `seed.ts`: Script to populate the database with initial/dummy data.
+- `migrations/`: History of schema changes.
 
-### 4. Start the REST API server
+---
 
-```bash
-bun run dev
-```
+## 🚀 Tech Stack
 
-The server listens on `http://localhost:3000`. Example requests:
+- **Framework**: [Hono](https://hono.dev/) (Lightweight, Cloud-native web framework)
+- **Runtime**: [Bun](https://bun.sh/) / [Node.js](https://nodejs.org/)
+- **ORM**: [Prisma](https://www.prisma.io/)
+- **Database**: PostgreSQL (via Prisma Adapter)
+- **Validation**: [Zod](https://zod.dev/)
+- **Authentication**: JWT & OAuth (Google)
+- **Storage**: Cloudinary (Image management)
+- **Caching**: Upstash Redis
 
-- `POST /signup` – create a user (and optional posts).
-- `POST /post` – create a post for an existing user.
-- `PUT /publish/:id` – toggle the `published` flag.
-- `GET /users` – list all users with their posts.
-- `GET /feed?searchString=hello&take=5` – filter/paginate published posts.
+---
 
-Each route pulls the Prisma Client from the Hono context via `withPrisma`, so a single client instance is reused per request.
+## 🏁 Getting Started Reference
 
-## Switch to another database
-
-If you want to try this example with another database, refer to the [Databases](https://www.prisma.io/docs/orm/overview/databases) section in the Prisma docs.
-
-## Next steps
-
-- Check out the [Prisma docs](https://www.prisma.io/docs)
-- Share feedback on the [Prisma Discord](https://pris.ly/discord/)
-- Create issues or ask questions on [GitHub](https://github.com/prisma/prisma/)
+Refer to the [README.md](./README.md) for detailed instructions on how to set up the environment, migrate the database, and run the development server.
