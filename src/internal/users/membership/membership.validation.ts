@@ -19,7 +19,7 @@ export class MembershipValidation {
         .max(50, 'No Member maximum 50 characters')
         .optional(),
 
-       expiredAt: z.coerce.date().min(1, 'Expired minimun at least 1 character long').max(200, 'Expired maximun 200 characters'),
+       expiredAt: z.coerce.date(),
     })
 
     static readonly UPDATE = z.object({
@@ -40,6 +40,6 @@ export class MembershipValidation {
         .max(50, 'No Member maximum 50 characters')
         .optional(),
 
-       expiredAt: z.coerce.date().min(1, 'Expired minimun at least 1 character long').max(200, 'Expired maximun 200 characters').optional(),
+       expiredAt: z.coerce.date().optional(),
     })
 }

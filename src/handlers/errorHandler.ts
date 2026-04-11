@@ -6,7 +6,7 @@ export const errorHandler = (err: unknown, c: any) => {
   if (err instanceof ZodError) {
     return c.json(
       {
-        message: 'Validation Error',
+        message: 'Validasi Error',
         errors: formatZodIssues(err.issues),
       },
       400,
