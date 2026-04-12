@@ -78,7 +78,7 @@ The database layer.
 
 ---
 
-## 🏁 Getting Started Reference
+##  Getting Started Reference
 
 ---
 
@@ -95,7 +95,7 @@ All endpoints are prefixed with `/api`. Standard responses follow this structure
 }
 ```
 
-### 🔐 Authentication & Users
+###  Authentication & Users
 
 | Method | Path | Auth | Description |
 | :--- | :--- | :--- | :--- |
@@ -127,7 +127,7 @@ All endpoints are prefixed with `/api`. Standard responses follow this structure
 ```
 </details>
 
-### 📦 Products
+###  Products
 
 | Method | Path | Auth | Description |
 | :--- | :--- | :--- | :--- |
@@ -164,7 +164,7 @@ All endpoints are prefixed with `/api`. Standard responses follow this structure
 ```
 </details>
 
-### 🏷️ Categories
+###  Categories
 
 | Method | Path | Auth | Description |
 | :--- | :--- | :--- | :--- |
@@ -190,7 +190,7 @@ All endpoints are prefixed with `/api`. Standard responses follow this structure
 ```
 </details>
 
-### 🎖️ Membership
+###  Membership
 
 | Method | Path | Auth | Description |
 | :--- | :--- | :--- | :--- |
@@ -219,7 +219,7 @@ All endpoints are prefixed with `/api`. Standard responses follow this structure
 ```
 </details>
 
-### ❤️ Likes & ⭐ Favourites
+###  Likes &  Favourites
 
 | Feature | Get Count | Toggle (POST) | My List (GET) | Check (GET) |
 | :--- | :--- | :--- | :--- | :--- |
@@ -241,7 +241,7 @@ All endpoints are prefixed with `/api`. Standard responses follow this structure
 ```
 </details>
 
-### 💬 Comments
+###  Comments
 
 | Method | Path | Auth | Description |
 | :--- | :--- | :--- | :--- |
@@ -274,4 +274,4 @@ All endpoints are prefixed with `/api`. Standard responses follow this structure
 
 ---
 
-## 🚀 Tech Stack
+##  Tech Stack
