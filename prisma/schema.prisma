@@ -20,7 +20,8 @@ model users {
   email       String    @unique
   password    String
   address     String?
-  image       String?   @default("https://image.com")
+  image       String?   
+  public_id   String?
   role        String    @default("user")
   token       String?
   createdAt   DateTime  @default(now())
@@ -37,7 +38,7 @@ model users {
 model memberships {
   id_membership Int       @id @default(autoincrement())
   id_user       Int
-  name          String
+  name          String    @default("Non Member")
   description   String?
   no_member     String?
   expired_at    DateTime

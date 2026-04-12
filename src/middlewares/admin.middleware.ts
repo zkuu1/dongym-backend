@@ -6,7 +6,7 @@ export const requireRole = (role: string) => {
   return async (c: Context, next: Next) => {
     const user = c.get('user')
 
-    if (!user || user.role !== role) {
+    if (!user || user.role?.toLowerCase() !== role?.toLowerCase()) {
       throw new HTTPException(403, { message: 'Forbidden' })
     }
 

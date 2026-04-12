@@ -12,6 +12,16 @@ export class ProductRepository {
         return prisma.products.findUnique({
             where: {
                 id_product
+            },
+            include: {
+                categories: true,
+                _count: {
+                    select: { 
+                        likes: {
+                            where: { status: true }
+                        }
+                    }
+                }
             }
         })
     }
@@ -27,6 +37,13 @@ export class ProductRepository {
             {
                 include: {
                     categories: true,
+                    _count: {
+                        select: { 
+                            likes: {
+                                where: { status: true }
+                            }
+                        }
+                    }
                 }
             }
         )

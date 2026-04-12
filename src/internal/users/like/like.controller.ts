@@ -25,7 +25,7 @@ LikeController.get('/likes/product/:id', withPrisma, async (c) => {
     return c.json(cachedData, 200)
   }
 
-  const response = await LikeService.countProductLikes(prisma, productId  )
+  const response = await LikeService.countProductLikes(prisma, productId)
 
   c.header("x-cache", "MISS")
   await redis.set(cacheKey, response, { ex: ONE_DAY })

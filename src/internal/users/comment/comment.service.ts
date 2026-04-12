@@ -149,7 +149,8 @@ export class CommentService {
   static async deleteComment(
     prisma: PrismaClient,
     idComment: number,
-    idUser: number
+    idUser: number,
+    role: string
   ): Promise<ApiResponse<null>> {
 
     const existing = await prisma.comments.findUnique({
@@ -160,14 +161,14 @@ export class CommentService {
       throw new HTTPException(404, { message: "Comment not found" })
     }
 
-    if (existing.id_user !== idUser) {
+    if (existing.id_user !== idUser && role !== 'admin') {
       throw new HTTPException(403, { message: "Forbidden" })
     }
 
     const deleted = await CommentRepository.deleteComment(
       prisma,
       idComment,
-      idUser
+      role === 'admin' ? undefined : idUser
     )
 
     if (deleted.count === 0) {

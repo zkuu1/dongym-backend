@@ -12,6 +12,11 @@ export type FavouriteData = {
   idProduct: number
   status: boolean
   createdAt?: string
+  products?: {
+    name: string
+    image: string | null
+    price: number
+  }
 }
 
 export type FavouriteCountData = {
@@ -38,7 +43,12 @@ export function toFavouriteData(
     idUser: favourite.id_user,
     idProduct: favourite.id_product,
     status: favourite.status,
-    createdAt: favourite.createdAt?.toISOString()
+    createdAt: favourite.createdAt?.toISOString(),
+    products: favourite.products ? {
+      name: favourite.products.name,
+      image: favourite.products.image,
+      price: favourite.products.price
+    } : undefined
   }
 }
 

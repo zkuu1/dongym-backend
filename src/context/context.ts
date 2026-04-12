@@ -7,6 +7,7 @@ export type ContextWithPrisma = {
 };
 
 export type UserPayload = {
+  role: string
   id: number;
 };
 
@@ -21,6 +22,8 @@ export type AppContext = {
     prisma: PrismaClient;
     admin: AdminPayload;
     user?: UserPayload;
+    'user-google'?: any;
+    token?: any;
   };
 };
 
