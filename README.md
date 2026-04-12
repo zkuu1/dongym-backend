@@ -80,4 +80,198 @@ The database layer.
 
 ## 🏁 Getting Started Reference
 
-Refer to the [README.md](./README.md) for detailed instructions on how to set up the environment, migrate the database, and run the development server.
+---
+
+## 🔌 API Documentation
+
+All endpoints are prefixed with `/api`. Standard responses follow this structure:
+
+```json
+{
+  "success": true,
+  "message": "Success message here",
+  "data": { ... },
+  "meta": { ... } // Optional: pagination metadata
+}
+```
+
+### 🔐 Authentication & Users
+
+| Method | Path | Auth | Description |
+| :--- | :--- | :--- | :--- |
+| **POST** | `/user/register` | Public | Register a new user account |
+| **POST** | `/user/login` | Public | Authenticate user and receive token |
+| **POST** | `/user/logout/:id` | Public | Invalidate user session |
+| **GET** | `/user` | Admin | List all registered users |
+| **GET** | `/user/:id` | Self/Admin | Get detailed user profile |
+| **PATCH** | `/user/:id` | Auth | Update user profile (Multipart/JSON) |
+| **DELETE** | `/user/:id` | Admin | Remove a user account |
+
+<details>
+<summary>View Example Login Response</summary>
+
+```json
+{
+  "success": true,
+  "message": "Login success",
+  "data": {
+    "id": 1,
+    "name": "Admin Gym",
+    "email": "admin@dongym.com",
+    "address": "Gym Street No. 1",
+    "image": "https://res.cloudinary.com/...",
+    "role": "admin",
+    "token": "eyJhbGciOiJIUzI1NiIsInR..."
+  }
+}
+```
+</details>
+
+### 📦 Products
+
+| Method | Path | Auth | Description |
+| :--- | :--- | :--- | :--- |
+| **GET** | `/product` | Public | List all available products |
+| **GET** | `/product/:id` | Public | Get product details |
+| **POST** | `/product` | Admin | Create a new product (Multipart) |
+| **PATCH** | `/product/:id` | Admin | Update product details (Multipart) |
+| **DELETE** | `/product/:id` | Admin | Delete a product |
+
+<details>
+<summary>View Example Product List Response</summary>
+
+```json
+{
+  "success": true,
+  "message": "Get All Products success",
+  "data": [
+    {
+      "id": 1,
+      "name": "Whey Protein 1kg",
+      "description": "High quality protein for muscle growth",
+      "price": 450000,
+      "stock": 50,
+      "image": "https://res.cloudinary.com/...",
+      "categories": { "name": "Supplements" }
+    }
+  ],
+  "meta": {
+    "page": 1,
+    "limit": 1,
+    "total": 1
+  }
+}
+```
+</details>
+
+### 🏷️ Categories
+
+| Method | Path | Auth | Description |
+| :--- | :--- | :--- | :--- |
+| **GET** | `/category` | Public | List all product categories |
+| **GET** | `/category/:id` | Public | Get category details |
+| **POST** | `/category` | Admin | Create a new category |
+| **PATCH** | `/category/:id` | Admin | Update a category |
+| **DELETE** | `/category/:id` | Admin | Delete a category |
+
+<details>
+<summary>View Example Category Response</summary>
+
+```json
+{
+  "success": true,
+  "message": "Category created success",
+  "data": {
+    "id": 1,
+    "name": "Supplements",
+    "description": "Sport supplements and vitamins"
+  }
+}
+```
+</details>
+
+### 🎖️ Membership
+
+| Method | Path | Auth | Description |
+| :--- | :--- | :--- | :--- |
+| **GET** | `/membership` | Public | List all membership plans |
+| **GET** | `/membership/:id` | Public | Get membership details |
+| **POST** | `/membership` | Admin | Assign membership to a user |
+| **PATCH** | `/membership/:id` | Admin | Update membership details |
+| **DELETE** | `/membership/:id` | Admin | Revoke membership |
+
+<details>
+<summary>View Example Membership Response</summary>
+
+```json
+{
+  "success": true,
+  "message": "Get membership success",
+  "data": {
+    "idMembership": 1,
+    "idUsers": 5,
+    "name": "Gold Membership",
+    "description": "Full gym access + Locker",
+    "numberMember": "MEM-2024-001",
+    "expiredAt": "2025-04-12T10:52:16Z"
+  }
+}
+```
+</details>
+
+### ❤️ Likes & ⭐ Favourites
+
+| Feature | Get Count | Toggle (POST) | My List (GET) | Check (GET) |
+| :--- | :--- | :--- | :--- | :--- |
+| **Likes** | `/likes/product/:id` | `/likes/:productId` | `/likes/me` | `/likes/check/:productId` |
+| **Favourites**| `/favourites/product/:id` | `/favourites/:productId` | `/favourites/me` | `/favourites/check/:productId` |
+
+<details>
+<summary>View Example Liked Status Response</summary>
+
+```json
+{
+  "success": true,
+  "message": "Check like status success",
+  "data": {
+    "productId": 1,
+    "liked": true
+  }
+}
+```
+</details>
+
+### 💬 Comments
+
+| Method | Path | Auth | Description |
+| :--- | :--- | :--- | :--- |
+| **GET** | `/comments` | Public | List all comments |
+| **GET** | `/comments/me` | Auth | List current user's comments |
+| **GET** | `/comments/user/:id` | Public | List comments by a specific user |
+| **GET** | `/comments/product/:id`| Public | List comments for a product |
+| **POST** | `/comments/:productId`| Auth | Post a comment on a product |
+| **PATCH** | `/comments/:id` | Auth | Update a comment (Owner only) |
+| **DELETE** | `/comments/:id` | Owner/Admin| Delete a comment |
+
+<details>
+<summary>View Example Comment Response</summary>
+
+```json
+{
+  "success": true,
+  "message": "Comment created successfully",
+  "data": {
+    "id": 10,
+    "id_user": 5,
+    "id_product": 1,
+    "comment": "Recommended product!",
+    "createdAt": "2024-04-12T10:52:16Z",
+    "user_name": "John Doe"
+  }
+}
+```
+</details>
+
+---
+
+## 🚀 Tech Stack
