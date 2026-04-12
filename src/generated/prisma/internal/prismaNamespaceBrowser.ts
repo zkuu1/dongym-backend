@@ -112,6 +112,7 @@ export type MembershipsScalarFieldEnum = (typeof MembershipsScalarFieldEnum)[key
 export const AbsensiScalarFieldEnum = {
   id_absensi: 'id_absensi',
   id_user: 'id_user',
+  no_member: 'no_member',
   date: 'date',
   status: 'status',
   createdAt: 'createdAt'

@@ -293,7 +293,7 @@ export type membershipsScalarWhereWithAggregatesInput = {
 }
 
 export type membershipsCreateInput = {
-  name: string
+  name?: string
   description?: string | null
   no_member?: string | null
   expired_at: Date | string
@@ -304,7 +304,7 @@ export type membershipsCreateInput = {
 export type membershipsUncheckedCreateInput = {
   id_membership?: number
   id_user: number
-  name: string
+  name?: string
   description?: string | null
   no_member?: string | null
   expired_at: Date | string
@@ -333,7 +333,7 @@ export type membershipsUncheckedUpdateInput = {
 export type membershipsCreateManyInput = {
   id_membership?: number
   id_user: number
-  name: string
+  name?: string
   description?: string | null
   no_member?: string | null
   expired_at: Date | string
@@ -451,7 +451,7 @@ export type membershipsUncheckedUpdateManyWithoutUsersNestedInput = {
 }
 
 export type membershipsCreateWithoutUsersInput = {
-  name: string
+  name?: string
   description?: string | null
   no_member?: string | null
   expired_at: Date | string
@@ -460,7 +460,7 @@ export type membershipsCreateWithoutUsersInput = {
 
 export type membershipsUncheckedCreateWithoutUsersInput = {
   id_membership?: number
-  name: string
+  name?: string
   description?: string | null
   no_member?: string | null
   expired_at: Date | string
@@ -508,7 +508,7 @@ export type membershipsScalarWhereInput = {
 
 export type membershipsCreateManyUsersInput = {
   id_membership?: number
-  name: string
+  name?: string
   description?: string | null
   no_member?: string | null
   expired_at: Date | string

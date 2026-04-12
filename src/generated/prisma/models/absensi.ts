@@ -39,6 +39,7 @@ export type AbsensiSumAggregateOutputType = {
 export type AbsensiMinAggregateOutputType = {
   id_absensi: number | null
   id_user: number | null
+  no_member: string | null
   date: Date | null
   status: string | null
   createdAt: Date | null
@@ -47,6 +48,7 @@ export type AbsensiMinAggregateOutputType = {
 export type AbsensiMaxAggregateOutputType = {
   id_absensi: number | null
   id_user: number | null
+  no_member: string | null
   date: Date | null
   status: string | null
   createdAt: Date | null
@@ -55,6 +57,7 @@ export type AbsensiMaxAggregateOutputType = {
 export type AbsensiCountAggregateOutputType = {
   id_absensi: number
   id_user: number
+  no_member: number
   date: number
   status: number
   createdAt: number
@@ -75,6 +78,7 @@ export type AbsensiSumAggregateInputType = {
 export type AbsensiMinAggregateInputType = {
   id_absensi?: true
   id_user?: true
+  no_member?: true
   date?: true
   status?: true
   createdAt?: true
@@ -83,6 +87,7 @@ export type AbsensiMinAggregateInputType = {
 export type AbsensiMaxAggregateInputType = {
   id_absensi?: true
   id_user?: true
+  no_member?: true
   date?: true
   status?: true
   createdAt?: true
@@ -91,6 +96,7 @@ export type AbsensiMaxAggregateInputType = {
 export type AbsensiCountAggregateInputType = {
   id_absensi?: true
   id_user?: true
+  no_member?: true
   date?: true
   status?: true
   createdAt?: true
@@ -186,6 +192,7 @@ export type absensiGroupByArgs<ExtArgs extends runtime.Types.Extensions.Internal
 export type AbsensiGroupByOutputType = {
   id_absensi: number
   id_user: number
+  no_member: string | null
   date: Date
   status: string
   createdAt: Date
@@ -217,6 +224,7 @@ export type absensiWhereInput = {
   NOT?: Prisma.absensiWhereInput | Prisma.absensiWhereInput[]
   id_absensi?: Prisma.IntFilter<"absensi"> | number
   id_user?: Prisma.IntFilter<"absensi"> | number
+  no_member?: Prisma.StringNullableFilter<"absensi"> | string | null
   date?: Prisma.DateTimeFilter<"absensi"> | Date | string
   status?: Prisma.StringFilter<"absensi"> | string
   createdAt?: Prisma.DateTimeFilter<"absensi"> | Date | string
@@ -226,6 +234,7 @@ export type absensiWhereInput = {
 export type absensiOrderByWithRelationInput = {
   id_absensi?: Prisma.SortOrder
   id_user?: Prisma.SortOrder
+  no_member?: Prisma.SortOrderInput | Prisma.SortOrder
   date?: Prisma.SortOrder
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -238,6 +247,7 @@ export type absensiWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.absensiWhereInput[]
   NOT?: Prisma.absensiWhereInput | Prisma.absensiWhereInput[]
   id_user?: Prisma.IntFilter<"absensi"> | number
+  no_member?: Prisma.StringNullableFilter<"absensi"> | string | null
   date?: Prisma.DateTimeFilter<"absensi"> | Date | string
   status?: Prisma.StringFilter<"absensi"> | string
   createdAt?: Prisma.DateTimeFilter<"absensi"> | Date | string
@@ -247,6 +257,7 @@ export type absensiWhereUniqueInput = Prisma.AtLeast<{
 export type absensiOrderByWithAggregationInput = {
   id_absensi?: Prisma.SortOrder
   id_user?: Prisma.SortOrder
+  no_member?: Prisma.SortOrderInput | Prisma.SortOrder
   date?: Prisma.SortOrder
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -263,14 +274,16 @@ export type absensiScalarWhereWithAggregatesInput = {
   NOT?: Prisma.absensiScalarWhereWithAggregatesInput | Prisma.absensiScalarWhereWithAggregatesInput[]
   id_absensi?: Prisma.IntWithAggregatesFilter<"absensi"> | number
   id_user?: Prisma.IntWithAggregatesFilter<"absensi"> | number
+  no_member?: Prisma.StringNullableWithAggregatesFilter<"absensi"> | string | null
   date?: Prisma.DateTimeWithAggregatesFilter<"absensi"> | Date | string
   status?: Prisma.StringWithAggregatesFilter<"absensi"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"absensi"> | Date | string
 }
 
 export type absensiCreateInput = {
+  no_member?: string | null
   date: Date | string
-  status: string
+  status?: string
   createdAt?: Date | string
   users: Prisma.usersCreateNestedOneWithoutAbsensiInput
 }
@@ -278,12 +291,14 @@ export type absensiCreateInput = {
 export type absensiUncheckedCreateInput = {
   id_absensi?: number
   id_user: number
+  no_member?: string | null
   date: Date | string
-  status: string
+  status?: string
   createdAt?: Date | string
 }
 
 export type absensiUpdateInput = {
+  no_member?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -293,6 +308,7 @@ export type absensiUpdateInput = {
 export type absensiUncheckedUpdateInput = {
   id_absensi?: Prisma.IntFieldUpdateOperationsInput | number
   id_user?: Prisma.IntFieldUpdateOperationsInput | number
+  no_member?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -301,12 +317,14 @@ export type absensiUncheckedUpdateInput = {
 export type absensiCreateManyInput = {
   id_absensi?: number
   id_user: number
+  no_member?: string | null
   date: Date | string
-  status: string
+  status?: string
   createdAt?: Date | string
 }
 
 export type absensiUpdateManyMutationInput = {
+  no_member?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -315,6 +333,7 @@ export type absensiUpdateManyMutationInput = {
 export type absensiUncheckedUpdateManyInput = {
   id_absensi?: Prisma.IntFieldUpdateOperationsInput | number
   id_user?: Prisma.IntFieldUpdateOperationsInput | number
+  no_member?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -333,6 +352,7 @@ export type absensiOrderByRelationAggregateInput = {
 export type absensiCountOrderByAggregateInput = {
   id_absensi?: Prisma.SortOrder
   id_user?: Prisma.SortOrder
+  no_member?: Prisma.SortOrder
   date?: Prisma.SortOrder
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -346,6 +366,7 @@ export type absensiAvgOrderByAggregateInput = {
 export type absensiMaxOrderByAggregateInput = {
   id_absensi?: Prisma.SortOrder
   id_user?: Prisma.SortOrder
+  no_member?: Prisma.SortOrder
   date?: Prisma.SortOrder
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -354,6 +375,7 @@ export type absensiMaxOrderByAggregateInput = {
 export type absensiMinOrderByAggregateInput = {
   id_absensi?: Prisma.SortOrder
   id_user?: Prisma.SortOrder
+  no_member?: Prisma.SortOrder
   date?: Prisma.SortOrder
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -407,15 +429,17 @@ export type absensiUncheckedUpdateManyWithoutUsersNestedInput = {
 }
 
 export type absensiCreateWithoutUsersInput = {
+  no_member?: string | null
   date: Date | string
-  status: string
+  status?: string
   createdAt?: Date | string
 }
 
 export type absensiUncheckedCreateWithoutUsersInput = {
   id_absensi?: number
+  no_member?: string | null
   date: Date | string
-  status: string
+  status?: string
   createdAt?: Date | string
 }
 
@@ -451,6 +475,7 @@ export type absensiScalarWhereInput = {
   NOT?: Prisma.absensiScalarWhereInput | Prisma.absensiScalarWhereInput[]
   id_absensi?: Prisma.IntFilter<"absensi"> | number
   id_user?: Prisma.IntFilter<"absensi"> | number
+  no_member?: Prisma.StringNullableFilter<"absensi"> | string | null
   date?: Prisma.DateTimeFilter<"absensi"> | Date | string
   status?: Prisma.StringFilter<"absensi"> | string
   createdAt?: Prisma.DateTimeFilter<"absensi"> | Date | string
@@ -458,12 +483,14 @@ export type absensiScalarWhereInput = {
 
 export type absensiCreateManyUsersInput = {
   id_absensi?: number
+  no_member?: string | null
   date: Date | string
-  status: string
+  status?: string
   createdAt?: Date | string
 }
 
 export type absensiUpdateWithoutUsersInput = {
+  no_member?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -471,6 +498,7 @@ export type absensiUpdateWithoutUsersInput = {
 
 export type absensiUncheckedUpdateWithoutUsersInput = {
   id_absensi?: Prisma.IntFieldUpdateOperationsInput | number
+  no_member?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -478,6 +506,7 @@ export type absensiUncheckedUpdateWithoutUsersInput = {
 
 export type absensiUncheckedUpdateManyWithoutUsersInput = {
   id_absensi?: Prisma.IntFieldUpdateOperationsInput | number
+  no_member?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -488,6 +517,7 @@ export type absensiUncheckedUpdateManyWithoutUsersInput = {
 export type absensiSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id_absensi?: boolean
   id_user?: boolean
+  no_member?: boolean
   date?: boolean
   status?: boolean
   createdAt?: boolean
@@ -497,6 +527,7 @@ export type absensiSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
 export type absensiSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id_absensi?: boolean
   id_user?: boolean
+  no_member?: boolean
   date?: boolean
   status?: boolean
   createdAt?: boolean
@@ -506,6 +537,7 @@ export type absensiSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
 export type absensiSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id_absensi?: boolean
   id_user?: boolean
+  no_member?: boolean
   date?: boolean
   status?: boolean
   createdAt?: boolean
@@ -515,12 +547,13 @@ export type absensiSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
 export type absensiSelectScalar = {
   id_absensi?: boolean
   id_user?: boolean
+  no_member?: boolean
   date?: boolean
   status?: boolean
   createdAt?: boolean
 }
 
-export type absensiOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id_absensi" | "id_user" | "date" | "status" | "createdAt", ExtArgs["result"]["absensi"]>
+export type absensiOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id_absensi" | "id_user" | "no_member" | "date" | "status" | "createdAt", ExtArgs["result"]["absensi"]>
 export type absensiInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   users?: boolean | Prisma.usersDefaultArgs<ExtArgs>
 }
@@ -539,6 +572,7 @@ export type $absensiPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id_absensi: number
     id_user: number
+    no_member: string | null
     date: Date
     status: string
     createdAt: Date
@@ -968,6 +1002,7 @@ export interface Prisma__absensiClient<T, Null = never, ExtArgs extends runtime.
 export interface absensiFieldRefs {
   readonly id_absensi: Prisma.FieldRef<"absensi", 'Int'>
   readonly id_user: Prisma.FieldRef<"absensi", 'Int'>
+  readonly no_member: Prisma.FieldRef<"absensi", 'String'>
   readonly date: Prisma.FieldRef<"absensi", 'DateTime'>
   readonly status: Prisma.FieldRef<"absensi", 'String'>
   readonly createdAt: Prisma.FieldRef<"absensi", 'DateTime'>
