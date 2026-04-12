@@ -240,6 +240,7 @@ export type likesOrderByWithRelationInput = {
 
 export type likesWhereUniqueInput = Prisma.AtLeast<{
   id_like?: number
+  id_user_id_product?: Prisma.likesId_userId_productCompoundUniqueInput
   AND?: Prisma.likesWhereInput | Prisma.likesWhereInput[]
   OR?: Prisma.likesWhereInput[]
   NOT?: Prisma.likesWhereInput | Prisma.likesWhereInput[]
@@ -249,7 +250,7 @@ export type likesWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"likes"> | Date | string
   users?: Prisma.XOR<Prisma.UsersScalarRelationFilter, Prisma.usersWhereInput>
   products?: Prisma.XOR<Prisma.ProductsScalarRelationFilter, Prisma.productsWhereInput>
-}, "id_like">
+}, "id_like" | "id_user_id_product">
 
 export type likesOrderByWithAggregationInput = {
   id_like?: Prisma.SortOrder
@@ -334,6 +335,11 @@ export type LikesListRelationFilter = {
 
 export type likesOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
+}
+
+export type likesId_userId_productCompoundUniqueInput = {
+  id_user: number
+  id_product: number
 }
 
 export type likesCountOrderByAggregateInput = {

@@ -14,6 +14,8 @@ import { generateUserToken } from "../../../helpers/jwt.js";
 
 import { UserRepository } from "./user.repository.js";
 import type { PaginationMeta } from "../../../dto/pagination.dto.js";
+import { uploadImageHandler } from "../../../handlers/uploadHandler.js";
+import cloudinary from "../../../libs/cloudinary.js";
 
 export class UsersService {
 
@@ -172,23 +174,64 @@ export class UsersService {
     static async updateUser(
         prisma: PrismaClient,
         data: Prisma.usersUpdateInput,
-        id: number
+        id: number,
+        file?: File
     ): Promise <ApiResponse<UsersData>> {
-        
-        if (Object.keys(data).length === 0) {
-         throw new HTTPException(400, {
-        message: 'Minimum one field is required to update admin',
-      })}
-
       const user = await UserRepository.findByIdUser(prisma, id);
       if (!user) {
-        throw new HTTPException(401, {
-            message: 'User not found'
-        })
+        throw new HTTPException(404, { message: 'User not found' });
+      }
+
+      // Check if any actual data has changed
+      const isNameChanged = data.name !== undefined && data.name !== user.name;
+      const isEmailChanged = data.email !== undefined && data.email !== user.email;
+      const isPasswordChanged = data.password !== undefined; 
+      const isAddressChanged = data.address !== undefined && (data.address ?? '') !== (user.address ?? '');
+      const isRoleChanged = data.role !== undefined && data.role !== user.role;
+      const isImageChanged = !!file;
+
+      if (!isNameChanged && !isEmailChanged && !isPasswordChanged && !isAddressChanged && !isRoleChanged && !isImageChanged) {
+        throw new HTTPException(400, { message: 'Minimal satu data yang ubah untuk update user' });
+      }
+
+      if (Object.keys(data).length === 0 && !file) {
+         throw new HTTPException(400, { message: 'Minimum one field is required to update user' });
+      }
+
+      let imageUrl = user.image;
+      let publicId = user.public_id;
+
+      if (file) {
+          const allowedTypes = ['image/jpeg', 'image/png', 'image/webp'];
+          if (!allowedTypes.includes(file.type)) {
+              throw new HTTPException(400, {
+                  message: 'Invalid file type. Only JPG, PNG, WEBP allowed'
+              });
+          }
+
+          const uploaded = await uploadImageHandler(file);
+          
+          if (user.public_id) {
+              await cloudinary.uploader.destroy(user.public_id);
+          }
+
+          imageUrl = uploaded.url;
+          publicId = uploaded.public_id;
+      }
+
+      const prismaData: Prisma.usersUpdateInput = {
+          ...data,
+          role: typeof data.role === 'string' ? data.role.toLowerCase() : data.role,
+          image: imageUrl,
+          public_id: publicId
+      };
+
+      if (data.password) {
+          prismaData.password = await bcrypt.hash(data.password as string, 10);
       }
 
       const updated = await UserRepository.updateUserById(
-        prisma, data, id
+        prisma, prismaData, id
       )
 
       return toUsersResponse(updated, 'User updated success')

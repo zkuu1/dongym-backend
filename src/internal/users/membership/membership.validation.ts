@@ -6,8 +6,8 @@ export class MembershipValidation {
         idUser: z.coerce.number().min(1, 'Id User must be valid positive number'),
 
        name: z.string()
-        .min(3, 'Name must be at least 3 characters long')
-        .max(50, 'Name maximum 50 characters'),
+        .min(3, 'Membership name must be at least 3 characters long')
+        .max(50, 'Membership name maximum 50 characters'),
 
        description: z.string()
         .min(3, 'Description must be at least 3 characters long')
@@ -26,8 +26,8 @@ export class MembershipValidation {
         idUser: z.coerce.number().min(1, 'Id User must be valid positive number').optional(),
 
        name: z.string()
-        .min(3, 'Name must be at least 3 characters long')
-        .max(50, 'Name maximum 50 characters')
+        .min(3, ' Membership name must be at least 3 characters long')
+        .max(50, 'Membership name maximum 50 characters')
         .optional(),
 
        description: z.string()

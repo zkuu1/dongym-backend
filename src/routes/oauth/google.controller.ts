@@ -4,19 +4,21 @@ import jwt from "jsonwebtoken"
 import { PrismaClient } from "../../generated/prisma/client.js"
 import type { AppContext } from "../../context/context.js"
 import withPrisma from "../../libs/prisma.js"
+import { redis } from "../../helpers/redis.js"
+import { generateUserToken } from "../../helpers/jwt.js"
 
 export const GoogleController = new Hono<AppContext>()
 
-GoogleController.use("/auth/google",
-  googleAuth({
+const googleMiddleware = googleAuth({
     client_id: process.env.GOOGLE_CLIENT_ID!,
     client_secret: process.env.GOOGLE_CLIENT_SECRET!,
     redirect_uri: process.env.GOOGLE_REDIRECT_URI!,
     scope: ["openid", "email", "profile"],
-  })
-)
+})
 
-GoogleController.get('/auth/google/callback', withPrisma, async(c) => {
+GoogleController.get("/auth/google", googleMiddleware)
+
+GoogleController.get('/auth/google/callback', googleMiddleware, withPrisma, async(c) => {
 
     const prisma = c.get('prisma')
     const user = c.get('user-google')
@@ -44,22 +46,20 @@ GoogleController.get('/auth/google/callback', withPrisma, async(c) => {
                 role: "user"
            }
         })
+
+        await redis.del("users:all")
     }
 
-    const token = jwt.sign(
-    { id: created.id_user, email: created.email },
-    process.env.JWT_SECRET!,
-    { expiresIn: "7d" }
-  )
+    const token = generateUserToken({
+        id: created.id_user,
+        name: created.name,
+        role: created.role
+    })
 
     await prisma.users.update({
         where: { id_user: created.id_user },
         data: { token }
     })
 
-    return c.json({
-        message: "Login success",
-        token,
-        user: created
-})
+    return c.redirect(`${process.env.FRONTEND_URL || 'http://localhost:3001'}/auth/google-login?token=${token}`)
 })

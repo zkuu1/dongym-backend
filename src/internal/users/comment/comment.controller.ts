@@ -174,7 +174,8 @@ CommentController.delete(
     const response = await CommentService.deleteComment(
       prisma,
       id,
-      user.id
+      user.id,
+      user.role
     )
 
     await redis.del("comments:all")

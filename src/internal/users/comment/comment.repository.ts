@@ -37,7 +37,8 @@ export class CommentRepository{
                 where: {id_product},
 
                 include: {
-                    products: true
+                    products: true,
+                    users: true
                 },
                 orderBy: {
                     createdAt: 'desc'
@@ -81,12 +82,12 @@ export class CommentRepository{
     static async deleteComment(
     prisma: PrismaClient,
     id_comment: number,
-    id_user: number
+    id_user?: number
     ) {
     return prisma.comments.deleteMany({
         where: {
         id_comment,
-        id_user
+        ...(id_user && { id_user })
         }
     })
 }

@@ -12,6 +12,11 @@ export type LikeData = {
   idProduct: number
   status: boolean
   createdAt?: string
+  products?: {
+    name: string
+    image: string | null
+    price: number
+  }
 }
 
 export type LikeCountData = {
@@ -38,7 +43,12 @@ export function toLikeData(
     idUser: like.id_user,
     idProduct: like.id_product,
     status: like.status,
-    createdAt: like.createdAt?.toISOString()
+    createdAt: like.createdAt?.toISOString(),
+    products: like.products ? {
+      name: like.products.name,
+      image: like.products.image,
+      price: like.products.price
+    } : undefined
   }
 }
 

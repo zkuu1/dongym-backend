@@ -21,6 +21,7 @@ export type ProductsData = {
     image?: string | null
     price?: number 
     stock?: number 
+    likeCount?: number
     createdAt?: string
 }
 
@@ -44,8 +45,8 @@ export function toProductsData(
         description: product.description,
         image: product.image,
         price: product.price,
-        stock: product.stock
-
+        stock: product.stock,
+        likeCount: (product as any)._count?.likes || 0
     }
 }
 

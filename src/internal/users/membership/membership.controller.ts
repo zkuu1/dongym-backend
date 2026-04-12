@@ -60,7 +60,7 @@ MembershipController.post('/membership', withPrisma, authMiddleware, requireRole
     }
 
     const response = await MembershipService.createMembership(prisma, prismaData)
-    await redis.del("memberships:all")
+    await redis.del("memberships:all", "users:all")
     return c.json(response, 201)
 })
 
@@ -88,7 +88,7 @@ MembershipController.patch('/membership/:id', withPrisma, authMiddleware, requir
     }
 
     const response = await MembershipService.updateMembershipById(prisma, id, prismaData)
-    await redis.del("memberships:all")
+    await redis.del("memberships:all", "users:all")
     return c.json(response, 201)
 })
 
@@ -100,6 +100,6 @@ MembershipController.delete('/membership/:id', withPrisma, authMiddleware, requi
     }
 
     const response = await MembershipService.deleteMembershipById(prisma, id)
-    await redis.del("memberships:all")
+    await redis.del("memberships:all", "users:all")
     return c.json(response, 200)
 })

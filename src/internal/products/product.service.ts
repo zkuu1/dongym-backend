@@ -129,7 +129,7 @@ export class ProductsService {
 
    static async updateProduct(
         prisma: PrismaClient,
-        data: Prisma.productsUpdateInput,
+        data: any,
         id: number,
         file?: File
         ): Promise<ApiResponse<ProductsData>> {
@@ -173,11 +173,21 @@ export class ProductsService {
             publicId = uploaded.public_id;
         }
 
+        const { idCategory, ...rest } = data;
+
         const prismaData: Prisma.productsUpdateInput = {
-            ...data,
+            ...rest,
             image: imageUrl,
             public_id: publicId
         };
+
+        if (idCategory) {
+            prismaData.categories = {
+                connect: {
+                    id_category: Number(idCategory)
+                }
+            };
+        }
 
         const updated = await ProductRepository.updateProductById(
             prisma,
