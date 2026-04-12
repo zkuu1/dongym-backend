@@ -50,8 +50,9 @@ model memberships {
 model absensi {
   id_absensi  Int      @id @default(autoincrement())
   id_user     Int
+  no_member   String?
   date        DateTime
-  status      String
+  status      String   @default("Non Member")
   createdAt   DateTime @default(now())
 
   users users @relation(fields: [id_user], references: [id_user], onDelete: Cascade)

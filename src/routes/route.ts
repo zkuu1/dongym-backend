@@ -6,6 +6,7 @@ import { MembershipController } from '../internal/users/membership/membership.co
 import { LikeController } from '../internal/users/like/like.controller.js';
 import { FavouriteController } from '../internal/users/favourite/favourite.controller.js';
 import { CommentController } from '../internal/users/comment/comment.controller.js';
+import { AbsensiController } from '../internal/absensi/absensi.controller.js';
 
 export class PublicRoute  {
     public app: Hono;
@@ -23,5 +24,6 @@ export class PublicRoute  {
     this.app.route('/api', LikeController)
     this.app.route('/api', FavouriteController)
     this.app.route('/api', CommentController)
+    this.app.route('/api', AbsensiController)
   }
 }
