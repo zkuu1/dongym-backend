@@ -116,4 +116,71 @@ export class AbsensiRepository {
             where: { id_user }
         })
     }
+
+    static async getLeaderboard(prisma: PrismaClient, limit: number = 20) {
+        const leaderboard = await prisma.absensi.groupBy({
+            by: ['id_user'],
+            _count: {
+                id_user: true
+            },
+            orderBy: {
+                _count: {
+                    id_user: 'desc'
+                }
+            },
+            take: limit
+        });
+
+        // Fetch user details for each leaderboard entry
+        const results = await Promise.all(leaderboard.map(async (entry) => {
+            const user = await prisma.users.findUnique({
+                where: { id_user: entry.id_user },
+                select: {
+                    name: true,
+                    image: true,
+                    memberships: {
+                        where: {
+                            expired_at: {
+                                gte: new Date()
+                            }
+                        },
+                        take: 1
+                    }
+                }
+            });
+            return {
+                id_user: entry.id_user,
+                name: user?.name || "Unknown",
+                image: user?.image || null,
+                count: entry._count.id_user,
+                isMember: user?.memberships && user.memberships.length > 0
+            };
+        }));
+
+        return results;
+    }
+
+    static async getUserRank(prisma: PrismaClient, id_user: number) {
+        const counts = await prisma.absensi.groupBy({
+            by: ['id_user'],
+            _count: {
+                id_user: true
+            },
+            orderBy: {
+                _count: {
+                    id_user: 'desc'
+                }
+            }
+        });
+
+        const rank = counts.findIndex(entry => entry.id_user === id_user);
+        
+        // If user has no attendance, they won't be in the list
+        if (rank === -1) return null;
+
+        return {
+            rank: rank + 1,
+            count: counts[rank]._count.id_user
+        };
+    }
 }

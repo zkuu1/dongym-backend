@@ -135,3 +135,34 @@ AbsensiController.delete('/absensi/:id', authMiddleware, requireRole('admin'), w
     await redis.del("absensi:all")
     return c.json(response, 200)
 })
+
+// GET leaderboard — public/authenticated
+AbsensiController.get('/absensi/leaderboard/all', withPrisma, async (c) => {
+    const cacheKey = "absensi:leaderboard"
+    const cachedData = await redis.get(cacheKey)
+
+    if (cachedData) {
+        c.header("x-cache", "HIT")
+        return c.json(cachedData, 200)
+    }
+
+    const prisma = c.get('prisma')
+    const response = await AbsensiService.getLeaderboard(prisma, 20)
+
+    c.header("x-cache", "MISS")
+    await redis.set(cacheKey, response, { ex: ONE_DAY })
+    return c.json(response, 200)
+})
+
+// GET user rank — authenticated
+AbsensiController.get('/absensi/rank/:userId', authMiddleware, withPrisma, async (c) => {
+    const prisma = c.get('prisma')
+    const userId = Number(c.req.param('userId'))
+
+    if (Number.isNaN(userId)) {
+        throw new HTTPException(400, { message: 'Invalid user id' })
+    }
+
+    const response = await AbsensiService.getUserRank(prisma, userId)
+    return c.json(response, 200)
+})

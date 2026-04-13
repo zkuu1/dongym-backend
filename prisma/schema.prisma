@@ -147,3 +147,4 @@ model notification_logs {
   users users @relation(fields: [id_user], references: [id_user], onDelete: Cascade)
   templates notification_templates @relation(fields: [id_template], references: [id_template], onDelete: Cascade)
 }
+

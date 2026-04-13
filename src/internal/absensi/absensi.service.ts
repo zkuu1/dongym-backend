@@ -103,4 +103,28 @@ export class AbsensiService {
         const deleted = await AbsensiRepository.deleteAbsensiById(prisma, id)
         return toAbsensiResponse(deleted, 'Absensi deleted success')
     }
+
+    static async getLeaderboard(
+        prisma: PrismaClient,
+        limit: number = 20
+    ): Promise<any> {
+        const data = await AbsensiRepository.getLeaderboard(prisma, limit)
+        return {
+            success: true,
+            message: 'Get Leaderboard success',
+            data
+        }
+    }
+
+    static async getUserRank(
+        prisma: PrismaClient,
+        id_user: number
+    ): Promise<any> {
+        const rankData = await AbsensiRepository.getUserRank(prisma, id_user)
+        return {
+            success: true,
+            message: rankData ? 'Get User Rank success' : 'User has no attendance records',
+            data: rankData
+        }
+    }
 }
