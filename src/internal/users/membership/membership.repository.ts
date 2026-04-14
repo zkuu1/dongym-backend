@@ -45,5 +45,14 @@ export class MembershipRepository {
         })
     }
 
-    
+    static findActiveByUser(prisma: PrismaClient, id_user: number) {
+        return prisma.memberships.findFirst({
+            where: {
+                id_user,
+                expired_at: {
+                    gte: new Date()
+                }
+            }
+        })
+    }
 }

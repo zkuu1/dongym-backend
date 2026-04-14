@@ -4,7 +4,10 @@ export class UserRepository {
 
     static findByNameUser(prisma: PrismaClient, name: string) {
         return prisma.users.findFirst({
-            where: { name }
+            where: { name },
+            include: {
+                memberships: true
+            }
         })
     }
 
@@ -16,13 +19,19 @@ export class UserRepository {
 
     static findByEmailUser(prisma: PrismaClient, email: string) {
         return prisma.users.findUnique({
-            where: {email}
+            where: {email},
+            include: {
+                memberships: true
+            }
         })
     }
 
     static findByIdUser(prisma: PrismaClient, id_user: number) {
         return prisma.users.findUnique({
-            where: { id_user }
+            where: { id_user },
+            include: {
+                memberships: true
+            }
         })
     }
 

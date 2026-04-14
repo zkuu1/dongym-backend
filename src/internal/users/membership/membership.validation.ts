@@ -10,12 +10,10 @@ export class MembershipValidation {
         .max(50, 'Membership name maximum 50 characters'),
 
        description: z.string()
-        .min(3, 'Description must be at least 3 characters long')
         .max(200, 'Description maximum 200 characters')
         .optional(),
 
        noMember: z.string()
-        .min(3, 'No Member must be at least 3 characters long')
         .max(50, 'No Member maximum 50 characters')
         .optional(),
 
@@ -31,12 +29,10 @@ export class MembershipValidation {
         .optional(),
 
        description: z.string()
-        .min(3, 'Description must be at least 3 characters long')
         .max(200, 'Description maximum 200 characters')
         .optional(),
 
        noMember: z.string()
-        .min(3, 'No Member must be at least 3 characters long')
         .max(50, 'No Member maximum 50 characters')
         .optional(),
 

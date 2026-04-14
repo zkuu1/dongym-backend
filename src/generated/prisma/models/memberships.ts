@@ -252,17 +252,17 @@ export type membershipsOrderByWithRelationInput = {
 
 export type membershipsWhereUniqueInput = Prisma.AtLeast<{
   id_membership?: number
+  id_user?: number
+  no_member?: string
   AND?: Prisma.membershipsWhereInput | Prisma.membershipsWhereInput[]
   OR?: Prisma.membershipsWhereInput[]
   NOT?: Prisma.membershipsWhereInput | Prisma.membershipsWhereInput[]
-  id_user?: Prisma.IntFilter<"memberships"> | number
   name?: Prisma.StringFilter<"memberships"> | string
   description?: Prisma.StringNullableFilter<"memberships"> | string | null
-  no_member?: Prisma.StringNullableFilter<"memberships"> | string | null
   expired_at?: Prisma.DateTimeFilter<"memberships"> | Date | string
   createdAt?: Prisma.DateTimeFilter<"memberships"> | Date | string
   users?: Prisma.XOR<Prisma.UsersScalarRelationFilter, Prisma.usersWhereInput>
-}, "id_membership">
+}, "id_membership" | "id_user" | "no_member">
 
 export type membershipsOrderByWithAggregationInput = {
   id_membership?: Prisma.SortOrder

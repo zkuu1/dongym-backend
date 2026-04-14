@@ -53,7 +53,7 @@ export class AbsensiService {
         const existing = await AbsensiRepository.findByUserAndDate(prisma, idUser, date)
         if (existing) {
             throw new HTTPException(409, {
-                message: 'Absensi for this user on this date already exists'
+                message: 'Sudah Absensi Hari Ini'
             })
         }
 
@@ -70,7 +70,7 @@ export class AbsensiService {
         const prismaData: Prisma.absensiCreateInput = {
             ...data,
             status: membership ? 'member' : 'non member',
-            no_member: data.no_member || (membership?.no_member ?? null)
+            no_member: membership ? (membership.no_member ?? null) : (data.no_member ?? null)
         }
 
         const absensi = await AbsensiRepository.createAbsensi(prisma, prismaData)

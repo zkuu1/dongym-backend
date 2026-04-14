@@ -37,10 +37,10 @@ model users {
 
 model memberships {
   id_membership Int       @id @default(autoincrement())
-  id_user       Int
+  id_user       Int       @unique
   name          String    @default("Non Member")
   description   String?
-  no_member     String?
+  no_member     String?   @unique
   expired_at    DateTime
   createdAt     DateTime @default(now())
 

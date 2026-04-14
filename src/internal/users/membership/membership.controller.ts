@@ -42,6 +42,14 @@ MembershipController.get('/membership/:id', withPrisma, async(c) => {
     return c.json(response, 200)
 })
 
+MembershipController.get('/membership/me', authMiddleware, withPrisma, async (c) => {
+    const prisma = c.get('prisma')
+    const user = c.get('user') as { id: number }
+
+    const response = await MembershipService.getMembershipByUser(prisma, user.id)
+    return c.json(response, 200)
+})
+
 MembershipController.post('/membership', withPrisma, authMiddleware, requireRole('admin'), async(c) => {
     const prisma = c.get('prisma')
     const raw = await safeJson(c)

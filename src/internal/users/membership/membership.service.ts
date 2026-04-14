@@ -47,9 +47,32 @@ export class MembershipService {
         prisma: PrismaClient,
         data: Prisma.membershipsCreateInput
     ): Promise<ApiResponse<MembershipData>> {
+        // Ambil id_user dari struktur relasi connect
+        const id_user = data.users?.connect?.id_user;
+            
+        if (id_user) {
+            const existing = await prisma.memberships.findFirst({
+                where: { id_user }
+            });
+            
+            if (existing) {
+                throw new HTTPException(400, {
+                    message: "User ini sudah terdaftar sebagai member. Silakan perbarui membership yang ada jika ingin melakukan perpanjangan."
+                });
+            }
+        }
 
-        const membership = await MembershipRepository.createMembership(prisma, data)
-        return toMembershipResponse(membership, 'Membership created success')
+        try {
+            const membership = await MembershipRepository.createMembership(prisma, data)
+            return toMembershipResponse(membership, 'Membership created success')
+        } catch (error: any) {
+            if (error.code === 'P2002') {
+                throw new HTTPException(400, {
+                    message: `Nomor Member ${data.no_member} sudah digunakan oleh user lain.`
+                })
+            }
+            throw error;
+        }
     }
 
     static async updateMembershipById(
@@ -65,14 +88,36 @@ export class MembershipService {
             })
         }
 
-        const membership = await MembershipRepository.updateMembershipById(prisma, id, data)
-        if (Object.keys(data).length === 0) {
-            throw new HTTPException(400, {
-            message: 'Minimum one field is required to update memberships'
+        try {
+            const membership = await MembershipRepository.updateMembershipById(prisma, id, data)
+            if (Object.keys(data).length === 0) {
+                throw new HTTPException(400, {
+                message: 'Minimum one field is required to update memberships'
+                });
+            }
+            
+            return toMembershipResponse(membership, 'Membership updated success')
+        } catch (error: any) {
+             if (error.code === 'P2002') {
+                throw new HTTPException(400, {
+                    message: `Nomor Member ${data.no_member} sudah digunakan oleh user lain.`
+                })
+            }
+            throw error;
+        }
+    }
+
+    static async getMembershipByUser(
+        prisma: PrismaClient,
+        id_user: number
+    ): Promise<ApiResponse<MembershipData>> {
+        const membership = await MembershipRepository.findActiveByUser(prisma, id_user);
+        if (!membership) {
+            throw new HTTPException(404, {
+                message: 'No active membership found for this user'
             });
         }
-        
-        return toMembershipResponse(membership, 'Membership updated success')
+        return toMembershipResponse(membership, 'Get Membership success');
     }
 
     static async deleteMembershipById(
