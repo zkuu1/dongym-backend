@@ -47,6 +47,7 @@ export class MembershipService {
         prisma: PrismaClient,
         data: Prisma.membershipsCreateInput
     ): Promise<ApiResponse<MembershipData>> {
+            
         // Ambil id_user dari struktur relasi connect
         const id_user = data.users?.connect?.id_user;
             

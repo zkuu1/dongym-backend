@@ -148,24 +148,42 @@ export class UsersService {
 
     static async createUser(
         prisma: PrismaClient,
-        data: Prisma.usersCreateInput
+        data: Prisma.usersCreateInput,
+        file?: File
     ): Promise<ApiResponse<UsersData>> {
-
         const duplicate = await UserRepository.countByEmailUser(
             prisma,
             data.email
         );
 
-        if (duplicate > 1) {
+        if (duplicate > 0) {
             throw new HTTPException(400, {
                 message: 'User with the same email already exist'
             })
+        }
+
+        let imageUrl = data.image || `https://ui-avatars.com/api/?name=${encodeURIComponent(data.name)}&background=random`;
+        let publicId = null;
+
+        if (file) {
+            const allowedTypes = ['image/jpeg', 'image/png', 'image/webp'];
+            if (!allowedTypes.includes(file.type)) {
+                throw new HTTPException(400, {
+                    message: 'Invalid file type. Only JPG, PNG, WEBP allowed'
+                });
+            }
+
+            const uploaded = await uploadImageHandler(file);
+            imageUrl = uploaded.url;
+            publicId = uploaded.public_id;
         }
 
         const hashedPassword = await bcrypt.hash(data.password, 10);
         const user = await UserRepository.createUser(prisma, {
             ...data,
             password: hashedPassword,
+            image: imageUrl,
+            public_id: publicId
         });
 
         return toUsersResponse(user, 'User created successfully')
